@@ -1,8 +1,7 @@
 package com.busanit.mentalCare.repository;
 
 import com.busanit.mentalCare.model.Mc_user;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.busanit.mentalCare.service.Mc_userService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
