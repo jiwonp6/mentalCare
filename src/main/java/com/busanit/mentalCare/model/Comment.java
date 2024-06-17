@@ -8,11 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
-import static jakarta.persistence.FetchType.LAZY;
 
 @Builder
 @Data
@@ -32,8 +29,9 @@ public class Comment {
 
     @Column(name = "comment_content")
     private String comment_content;
-    @Column(name = "comment_date")
-    private Date comment_date;
+
+    @Column(name = "comment_time")
+    private LocalDateTime comment_time;
 
     // 다 대 1 관계
     @ManyToOne
@@ -45,15 +43,6 @@ public class Comment {
     @Column(nullable = false)
     private Boolean isDeleted;
 
-    // comment에 parent 추가해야 할 상황일 듯...?
-    // 부모 댓글 -> null일 경우 최상위 댓글
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "parent_id")
-    private Comment parentComment;
-
-    // 자식 댓글 -> 대댓글
-    @OneToMany(mappedBy = "parent", orphanRemoval = true)
-    private List<Comment> childrenComment = new ArrayList<>();
 
     // 엔티티 -> DTO 변환 메서드 (user에 대해서 선생님께 여쭤보기)
     public CommentDTO toDTO() {
@@ -65,7 +54,7 @@ public class Comment {
             userId = user.getUser_id();
         }
 
-        return new CommentDTO(comment_id, comment_content, comment_date, userId, boardId);
+        return new CommentDTO(comment_id, comment_content, comment_time, userId, boardId);
     }
 
 

@@ -7,8 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +16,7 @@ import java.util.List;
 public class CommentDTO {
     private Long comment_id;
     private String comment_content;
-    private Date comment_date;
+    private LocalDateTime comment_date;
     private String user_id;
     private Long board_id;
     //private Comment parentComment;
@@ -28,7 +28,7 @@ public class CommentDTO {
         return Comment.builder()
                 .comment_id(comment_id)
                 .comment_content(comment_content)
-                .comment_date(comment_date)
+                .comment_time(comment_date)
                 .user(user)
                 .board(board)
                 .build();
@@ -40,7 +40,7 @@ public class CommentDTO {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setComment_id(comment.getComment_id());
         commentDTO.setComment_content(comment.getComment_content());
-        commentDTO.setComment_date(comment.getComment_date());
+        commentDTO.setComment_date(comment.getComment_time());
         commentDTO.setUser_id(comment.getUser().getUser_id());
         commentDTO.setBoard_id(comment.getBoard().getBoard_id());
         return commentDTO;

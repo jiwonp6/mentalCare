@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class BoardDTO {
     private TagType board_tag;
     private String board_title;
     private String user_id;
-    private Date board_date;
+    private LocalDateTime board_date;
     private String board_content;
     private Integer board_likeCount;
     private List<CommentDTO> comments;

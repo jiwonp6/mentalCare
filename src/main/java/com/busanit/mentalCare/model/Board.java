@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +35,7 @@ public class Board {
     private Mc_user user;
 
     @Column(name = "board_date")
-    private Date board_date;
+    private LocalDateTime board_date;
 
     @Column(name = "board_content")
     private String board_content;
