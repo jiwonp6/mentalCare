@@ -12,17 +12,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "emotion_state")
+@Table(name = "emotion")
 public class Emotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int emotion_id;
+    private Long emotionId;
 
     @Column(nullable = false)
-    private String emotion_keyword;
+    private String emotionKeyword;
 
     // 엔티티 -> DTO 변환 메서드
     public EmotionDto toDto() {
-        return new EmotionDto(emotion_id, emotion_keyword);
+        return new EmotionDto(emotionId, emotionKeyword);
     }
 }

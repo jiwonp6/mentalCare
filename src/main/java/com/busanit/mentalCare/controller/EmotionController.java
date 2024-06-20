@@ -1,16 +1,10 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.EmotionDto;
-import com.busanit.mentalCare.dto.Mc_userDto;
 import com.busanit.mentalCare.model.Emotion;
-import com.busanit.mentalCare.model.Mc_user;
-import com.busanit.mentalCare.service.CustomMc_userDetailsService;
 import com.busanit.mentalCare.service.EmotionService;
-import com.busanit.mentalCare.service.Mc_userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,15 +21,15 @@ public class EmotionController {
     /* 메소드 */
     // 이모션 추가
     @PostMapping("/createEmotion")
-    public ResponseEntity<String> createEmotion(@RequestBody Emotion emotion) {
-        emotionService.saveEmotion(emotion);
+    public ResponseEntity<String> createEmotion(@RequestBody EmotionDto emotionDto) {
+        emotionService.saveEmotion(emotionDto);
         return ResponseEntity.ok("이모션 추가 완료");
     }
 
     // 이모션 삭제
     @PostMapping("/deleteEmotion")
-    public ResponseEntity<String> deleteEmotion(@RequestBody int emotion_id) {
-        int result = emotionService.deleteEmotion(emotion_id);
+    public ResponseEntity<String> deleteEmotion(@RequestBody Long emotionId) {
+        int result = emotionService.deleteEmotion(emotionId);
         try {
             if (result == 1) {
                 return ResponseEntity.ok("이모션 삭제 완료");

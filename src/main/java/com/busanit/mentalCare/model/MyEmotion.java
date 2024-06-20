@@ -1,6 +1,6 @@
 package com.busanit.mentalCare.model;
 
-import com.busanit.mentalCare.dto.My_emotionDto;
+import com.busanit.mentalCare.dto.MyEmotionDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,26 +14,26 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "emotion")
-public class My_emotion {
+@Table(name = "myEmotion")
+public class MyEmotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int my_emotion_id;
+    private Long myEmotionId;
 
     @Column(nullable = false)
-    private String user_id;
+    private String userId;
 
     @Column(nullable = true)
-    private int emotion_id;
+    private int emotionId;
 
     @Column(nullable = true)
-    private String my_emotion_reason;
+    private String myEmotionReason;
 
     @Column(nullable = false)
-    private Date my_emotion_date;
+    private Date myEmotionDate;
 
     // 엔티티 -> DTO 변환 메서드
-    public My_emotionDto toDto() {
-        return new My_emotionDto(my_emotion_id, user_id, emotion_id, my_emotion_reason, my_emotion_date);
+    public MyEmotionDto toDto() {
+        return new MyEmotionDto(myEmotionId, userId, emotionId, myEmotionReason, myEmotionDate);
     }
 }

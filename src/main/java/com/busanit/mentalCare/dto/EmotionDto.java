@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmotionDto {
-    private int emotion_id;
-    private String emotion_keyword;
+    private Long emotionId;
+    private String emotionKeyword;
 
     // DTO -> 엔티티 (엔티티에 @Builder 적용, 빌더 패턴 사용)
     public Emotion toEntity() {
         // DTO -> 엔티티 필드 매핑
         Emotion emotion = Emotion.builder()
-                .emotion_id(emotion_id)
-                .emotion_keyword(emotion_keyword)
+                .emotionId(emotionId)
+                .emotionKeyword(emotionKeyword)
                 .build();
 
         return emotion;
