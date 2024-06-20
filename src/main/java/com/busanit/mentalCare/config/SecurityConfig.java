@@ -47,7 +47,7 @@ public class SecurityConfig {
                 // HTTP 요청에 대한 권한 설정
                 .authorizeRequests(auth -> auth
                         // 해당 패턴에 대해서는 권한 허용
-                        .requestMatchers("/test", "/register", "/auth", "/jwt/**",
+                        .requestMatchers("/mcUser/**", "/auth", "/jwt/**",
                                 // SpringDoc Open API 주소 허용
                                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
 
@@ -60,7 +60,6 @@ public class SecurityConfig {
                 )
                 // JWT 필터를 인증 필터 앞에 추가
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
 

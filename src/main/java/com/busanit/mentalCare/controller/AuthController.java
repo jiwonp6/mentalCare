@@ -1,10 +1,11 @@
 package com.busanit.mentalCare.controller;
 
+import com.busanit.mentalCare.dto.McUserDto;
 import com.busanit.mentalCare.jwt.JwtUtil;
-import com.busanit.mentalCare.model.Mc_user;
-import com.busanit.mentalCare.repository.Mc_userRepository;
-import com.busanit.mentalCare.service.CustomMc_userDetailsService;
-import com.busanit.mentalCare.service.Mc_userService;
+import com.busanit.mentalCare.model.McUser;
+import com.busanit.mentalCare.repository.McUserRepository;
+import com.busanit.mentalCare.service.CustomMcUserDetailsService;
+import com.busanit.mentalCare.service.McUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,19 +26,19 @@ public class AuthController {
 
     // 스프링 컴포넌트 의존성 주입
     private final AuthenticationManager authenticationManager;
-    private final Mc_userRepository userRepository;
     private final JwtUtil jwtUtil;
-    private final Mc_userService userService;
-    private final CustomMc_userDetailsService customUserService;
+    private final McUserRepository userRepository;
+    private final McUserService userService;
+    private final CustomMcUserDetailsService customUserService;
 
     @PostMapping("/auth")
-    public Map<String, String> authToken(@RequestBody Mc_user user) throws Exception {
+    public Map<String, String> authToken(@RequestBody McUser userDto) throws Exception {
         try {
             // 인증 관리자로 인증
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getUser_id(),
-                            user.getUser_pw()
+                            userDto.getUserId(),
+                            userDto.getUserPw()
                     )
             );
         } catch (BadCredentialsException e) {   // 인증 실패시
@@ -45,7 +46,7 @@ public class AuthController {
         }
 
         // UserDetails 가져오기
-        UserDetails userDetails = customUserService.loadUserByUsername(user.getUser_id());
+        UserDetails userDetails = customUserService.loadUserByUsername(userDto.getUserId());
 
         // 토큰 생성하기 (UserDetails 정보 기반)
         String jwt = jwtUtil.generateToken(userDetails);
@@ -57,8 +58,8 @@ public class AuthController {
         return response;
     }
 
-    @PostMapping("/register")
-    public Mc_user registerUser(@RequestBody Mc_user user) {
-        return userService.saveUser(user).toEntity();
+    @PostMapping("/createUser")
+    public McUserDto registerUser(@RequestBody McUserDto userDto) {
+        return userService.saveUser(userDto);
     }
 }
