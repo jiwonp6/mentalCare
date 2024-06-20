@@ -1,6 +1,5 @@
 package com.busanit.mentalCare.jwt;
 
-import com.busanit.mentalCare.service.Mc_userService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

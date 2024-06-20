@@ -2,9 +2,7 @@ package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.jwt.JwtUtil;
 import com.busanit.mentalCare.model.Mc_user;
-import com.busanit.mentalCare.repository.Mc_userRepository;
 import com.busanit.mentalCare.service.CustomMc_userDetailsService;
-import com.busanit.mentalCare.service.Mc_userService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

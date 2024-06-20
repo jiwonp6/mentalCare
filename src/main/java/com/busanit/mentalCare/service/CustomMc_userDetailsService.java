@@ -1,7 +1,6 @@
 package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.model.Mc_user;
-import com.busanit.mentalCare.repository.Mc_userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

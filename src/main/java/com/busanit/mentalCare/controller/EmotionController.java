@@ -1,16 +1,10 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.EmotionDto;
-import com.busanit.mentalCare.dto.Mc_userDto;
 import com.busanit.mentalCare.model.Emotion;
-import com.busanit.mentalCare.model.Mc_user;
-import com.busanit.mentalCare.service.CustomMc_userDetailsService;
 import com.busanit.mentalCare.service.EmotionService;
-import com.busanit.mentalCare.service.Mc_userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
