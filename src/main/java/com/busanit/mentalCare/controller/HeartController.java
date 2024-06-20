@@ -1,34 +1,28 @@
 package com.busanit.mentalCare.controller;
 
-import com.busanit.mentalCare.dto.HeartDTO;
+import com.busanit.mentalCare.model.User;
 import com.busanit.mentalCare.service.HeartService;
+import com.busanit.mentalCare.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("board/heart")
+@RequestMapping("/boardHeart")
 public class HeartController {
+
     private final HeartService heartService;
+    private final UserService userService;
 
-    // 공감을 추가하는 기능 (공감 버튼을 눌렀을 때)
-    @PostMapping
-    public ResponseEntity<HeartDTO> insert(@RequestBody HeartDTO heart) throws Exception {
-        HeartDTO insertHeart = heartService.insert(heart);
-        return ResponseEntity.status(HttpStatus.CREATED).body(insertHeart);
+    @PostMapping("up/{boardId}")
+    public ResponseEntity addHeart(@PathVariable("boardId") Long boardId, @RequestBody User user) {
+        heartService.addHeart(boardId, user);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // 공감을 취소하는 기능 (공감 버튼을 눌렀을 때)
-    @PostMapping
-    public ResponseEntity<HeartDTO> delete(@RequestBody HeartDTO heart) throws Exception {
-        HeartDTO deleteHeart = heartService.delete(heart);
-        return ResponseEntity.status(HttpStatus.CREATED).body(deleteHeart);
-    }
+
 
 
 }

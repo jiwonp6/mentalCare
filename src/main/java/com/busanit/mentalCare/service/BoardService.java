@@ -2,10 +2,10 @@ package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.BoardDTO;
 import com.busanit.mentalCare.model.Board;
-import com.busanit.mentalCare.model.Mc_user;
+import com.busanit.mentalCare.model.User;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.repository.CommentRepository;
-import com.busanit.mentalCare.repository.Mc_userRepository;
+import com.busanit.mentalCare.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,29 +23,23 @@ public class BoardService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private Mc_userRepository userRepository;
+    private UserRepository userRepository;
 
-    public List<BoardDTO> getAllComments() {
+    // 모든 게시글 조회
+    public List<BoardDTO> getAllBoards() {
         List<Board> boards = boardRepository.findAll();
 
         return boards.stream().map(Board::toDTO).toList();
     }
 
-    // 조회(일부 게시글) -> 이 기능이 필요한 지 생각해보기
-    public BoardDTO getBoardById(Long board_id) {
-        Board board = boardRepository.findById(board_id).orElse(null);
-        // DTO로 변환
-        if(board != null) {
-            return board.toDTO();
-        } else {
-            return null;
-        }
-    }
 
     // 게시글 생성
     @Transactional
     public BoardDTO createBoard(@RequestBody BoardDTO dto) {
-        Mc_user user  = userRepository.findByUserId(dto.getUser_id());
+        User user = userRepository.findByUserNickname(dto.getUserNickname());
+        System.out.println(user);
+        System.out.println("board entity:"+ dto.toEntity(user));
+
         Board saved = boardRepository.save(dto.toEntity(user));
         return saved.toDTO();
     }
@@ -56,12 +50,12 @@ public class BoardService {
         Board board = boardRepository.findById(board_id).orElse(null);
         if (board != null) {
             // 게시글 제목 변경
-            if (board.getBoard_title() != null) {
-                board.setBoard_title(updateBoard.getBoard_title());
+            if (board.getBoardTitle() != null) {
+                board.setBoardTitle(updateBoard.getBoardTitle());
             }
             // 게시글 내용 변경
-            if (board.getBoard_content() != null) {
-                board.setBoard_content(updateBoard.getBoard_content());
+            if (board.getBoardContent() != null) {
+                board.setBoardContent(updateBoard.getBoardContent());
             }
             // 글 작성자는 바꿀 수 없도록 함
             return boardRepository.save(board).toDTO();
@@ -83,30 +77,40 @@ public class BoardService {
     }
 
     // 저자를 통해 게시글 찾기
-    public List<BoardDTO> getBoardByUser(String user_nickname) {
-        List<Board> boardList = boardRepository.findByUser(user_nickname);
+    public List<BoardDTO> getBoardByUserNickName(String userNickname) {
+        List<Board> boardList = boardRepository.findByUserUserNickname(userNickname);
         return boardList.stream().map(Board::toDTO).toList();
     }
 
     // 포함된 글자를 통해 게시글 찾기
-    public List<BoardDTO> getBoardByContentContaining(String board_content) {
-        List<Board> boardList = boardRepository.findByBoardContaining(board_content);
+    public List<BoardDTO> getBoardByContentContaining(String boardContent) {
+        List<Board> boardList = boardRepository.findByBoardContentContaining(boardContent);
         return boardList.stream().map(Board::toDTO).toList();
     }
 
     // 제목에 포함된 글자를 통해 게시글 찾기
-    public List<BoardDTO> getBoardByTitleContaining(String board_title) {
-        List<Board> boardList = boardRepository.findByTitleContaining(board_title);
+    public List<BoardDTO> getBoardByTitleContaining(String boardTitle) {
+        List<Board> boardList = boardRepository.findByBoardTitleContaining(boardTitle);
         return boardList.stream().map(Board::toDTO).toList();
     }
 
-    public List<BoardDTO> updateCountJPQL(String board_id, boolean b) {
-        List<Board> boardList;
-        if (b) {
-            boardList = boardRepository.addCountJPQL(board_id);
-        } else {
-            boardList = boardRepository.subCountJPQL(board_id);
-        }
-        return boardList.stream().map(Board::toDTO).toList();
+    public Board findBoardId(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElse(null);
+        return board;
     }
+
+
+
+//    public List<BoardDTO> updateCountJPQL(String board_id, boolean b) {
+//        List<Board> boardList;
+//        if (b) {
+//            boardList = boardRepository.addCountJPQL(board_id);
+//        } else {
+//            boardList = boardRepository.subCountJPQL(board_id);
+//        }
+//        return boardList.stream().map(Board::toDTO).toList();
+//    }
+
+
+
 }

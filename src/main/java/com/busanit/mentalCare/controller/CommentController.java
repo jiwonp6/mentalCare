@@ -7,16 +7,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/comments")
 @RestController
 public class CommentController {
+
     @Autowired
     private CommentService commentService;
 
     // 수정 기능
-    @PutMapping("/{comment_id}")
-    ResponseEntity<CommentDTO> updateComment(@PathVariable Long comment_id, @RequestBody CommentDTO updatedComment) {
-        CommentDTO comment = commentService.updateComment(comment_id, updatedComment);
+    @PutMapping("/{commentId}")
+    ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId, @RequestBody CommentDTO updatedComment) {
+        CommentDTO comment = commentService.updateComment(commentId, updatedComment);
         if(comment == null) {
             return ResponseEntity.notFound().build();
         }
@@ -30,12 +33,18 @@ public class CommentController {
     }
 
 
-    @DeleteMapping("/{comment_id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long comment_id) {
-        if(!commentService.deleteComment(comment_id)) {
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        if(!commentService.deleteComment(commentId)) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CommentDTO>> getAllComments() {
+        List<CommentDTO> allComments = commentService.getAllComments();
+        return ResponseEntity.ok(allComments);
     }
 
 }
