@@ -29,7 +29,7 @@ public class McUser {
     private char userGender;
 
     @Column(nullable = false)
-    private int userAge;
+    private String userBirth;
 
     @Column(nullable = false)
     private String userEmail;
@@ -45,7 +45,7 @@ public class McUser {
 
     // 엔티티 -> DTO 변환 메서드
     public McUserDto toDto() {
-        return new McUserDto(userId, userPw, userNickname, userGender, userAge, userEmail, userPhonenumber, userJoindate, userSecession);
+        return new McUserDto(userId, userPw, userNickname, userGender, userBirth, userEmail, userPhonenumber, userJoindate, userSecession);
     }
 
 }

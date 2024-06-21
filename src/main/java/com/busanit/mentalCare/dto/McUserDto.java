@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +15,7 @@ public class McUserDto {
     private String userPw;
     private String userNickname;
     private char userGender;
-    private int userAge;
+    private String userBirth;
     private String userEmail;
     private String userPhonenumber;
     private LocalDate userJoindate;
@@ -30,7 +29,7 @@ public class McUserDto {
                 .userPw(userPw)
                 .userNickname(userNickname)
                 .userGender(userGender)
-                .userAge(userAge)
+                .userBirth(userBirth)
                 .userEmail(userEmail)
                 .userPhonenumber(userPhonenumber)
                 .userJoindate(userJoindate)

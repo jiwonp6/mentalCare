@@ -6,12 +6,10 @@ import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.repository.McUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 // 스프링 시큐리티의 클래스를 상속받지 않는 UserService
@@ -27,7 +25,6 @@ public class McUserService {
     public McUserDto loginUser(String userId, String userPw) {
         McUser user = userRepository.loginUser(userId, userPw);
 
-        System.out.println(user);
         // 사용자가 없는 경우 예외발생
         if (user == null) {
             throw new UsernameNotFoundException("Id 또는 비밀번호가 일치하지 않습니다.");
@@ -47,7 +44,7 @@ public class McUserService {
         boolean matches = passwordEncoder.matches(userUpdateDto.getUserPw(), user.getUserPw());
 
         if (matches) {
-            if (userUpdateDto.getUserPwNew() != null) {
+            if (userUpdateDto.getUserPwNew() != null && !userUpdateDto.getUserPwNew().equals("")) {
                 user.setUserPw(passwordEncoder.encode(userUpdateDto.getUserPwNew()));
             }
             if (userUpdateDto.getUserNickname() != null) {
@@ -57,7 +54,7 @@ public class McUserService {
                 user.setUserGender(userUpdateDto.getUserGender());
             }
             if (true) {
-                user.setUserAge(userUpdateDto.getUserAge());
+                user.setUserBirth(userUpdateDto.getUserBirth());
             }
             if (userUpdateDto.getUserEmail() != null) {
                 user.setUserEmail(userUpdateDto.getUserEmail());
