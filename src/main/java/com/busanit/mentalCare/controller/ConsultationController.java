@@ -53,7 +53,7 @@ public class ConsultationController {
             consultationRepository.delete(consultation);
             return "성공적으로 삭제되었습니다.";
         } else {
-            return "존재하지 않는 예약정보입니다.";
+            return "존재하지 않는 상담내역입니다.";
         }
 
     }
