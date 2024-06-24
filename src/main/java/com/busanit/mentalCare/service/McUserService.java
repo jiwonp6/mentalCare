@@ -34,8 +34,13 @@ public class McUserService {
     }
 
     // Id로 유저 정보 반환
-    public McUserDto findByUserId(String userId) {
-        return userRepository.findById(userId).orElse(null).toDto();
+    public McUserDto getByUserId(String userId) {
+        McUser user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return user.toDto();
+        } else {
+            return null;
+        }
     }
 
     // 회원 정보 수정
@@ -73,20 +78,15 @@ public class McUserService {
         userDto.setUserPw(passwordEncoder.encode(userDto.getUserPw()));
         userDto.setUserJoindate(LocalDate.now());
         userDto.setUserSecession(false);
+
         return userRepository.save(userDto.toEntity()).toDto();
     }
 
     // 회원 탈퇴
-    public Boolean withdrawUser(String userId, McUserDto checkUserDto) {
+    public McUserDto withdrawUser(String userId) {
         McUser user = userRepository.findById(userId).orElse(null);
-        boolean matches = passwordEncoder.matches(checkUserDto.getUserPw(), user.getUserPw());
-        if (matches) {
-            user.setUserSecession(true);
-            userRepository.save(user);
-            return true;
-        } else {
-            return false;
-        }
+        user.setUserSecession(true);
+        return userRepository.save(user).toDto();
     }
 
     // 전체 회원 조회
@@ -96,7 +96,7 @@ public class McUserService {
     }
 
     // 이용 회원 조회
-    public List<McUserDto> listOfJoinUsers(){
+    public List<McUserDto> listOfJoinUsers() {
         List<McUser> users = userRepository.listOfJoinUsers();
         return users.stream().map(McUser::toDto).toList();
     }

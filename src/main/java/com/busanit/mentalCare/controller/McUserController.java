@@ -55,7 +55,7 @@ public class McUserController {
         }
         // 인증된 사용자 정보를 가져옴
         UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUserId());
-        McUserDto byUserId = userService.findByUserId(userDto.getUserId());
+        McUserDto byUserId = userService.getByUserId(userDto.getUserId());
 
         // 토큰 생성하기 (UserDetails 정보 기반)
         String jwt = jwtUtil.generateToken(userDetails);
@@ -76,15 +76,18 @@ public class McUserController {
         return mcUserLogin;
     }
 
-    // Id로 유저 찾기
-    @GetMapping("/findByUserId")
-    public ResponseEntity<McUserDto> findByUserId(@RequestParam String userId) {
-        McUserDto userDto = userService.findByUserId(userId);
+    // Id로 유저 정보 반환
+    @GetMapping("/getByUserId")
+    public ResponseEntity<McUserDto> getByUserId(@RequestParam String userId) {
+        McUserDto userDto = userService.getByUserId(userId);
+        if (userDto == null) {
+            throw new RuntimeException("User Not Found");
+        }
         return ResponseEntity.ok(userDto);
     }
 
     // 회원 정보 수정
-    @PostMapping("/updateUser")
+    @PutMapping("/updateUser")
     public ResponseEntity<McUserDto> updateUser(@RequestParam String userId, @RequestBody McUserUpdateDto userUpdateDto) {
         McUserDto userDto = userService.updateUser(userId, userUpdateDto);
         return ResponseEntity.ok(userDto);
@@ -101,10 +104,10 @@ public class McUserController {
     }
 
     // 회원 탈퇴
-    @PostMapping("/withdrawUser")
-    public ResponseEntity<Boolean> withdrawUser(@RequestParam String userId, @RequestBody McUserDto checkUserDto) throws Exception {
-        Boolean result = userService.withdrawUser(userId, checkUserDto);
-        return ResponseEntity.ok(result);
+    @PutMapping("/withdrawUser")
+    public ResponseEntity<McUserDto> withdrawUser(@RequestParam String userId) throws Exception {
+        McUserDto mcUserDto = userService.withdrawUser(userId);
+        return ResponseEntity.ok(mcUserDto);
     }
 
     // 전체 회원 조회
