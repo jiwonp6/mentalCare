@@ -33,7 +33,7 @@ public class Reservation {
     private Hospital hospital;
 
     public ReservationDTO toDTO() {
-        Long hospitalId = 0L;
+        String hospitalId = String.valueOf(0L);
         if (hospital != null) {
             hospitalId = hospital.getHospitalId();
         }
