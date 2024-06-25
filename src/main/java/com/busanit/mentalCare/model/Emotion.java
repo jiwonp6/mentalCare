@@ -19,10 +19,13 @@ public class Emotion {
     private Long emotionId;
 
     @Column(nullable = false)
-    private String emotionKeyword;
+    private String emotionWord;
+
+    @Column(nullable = false)
+    private String emotionType;
 
     // 엔티티 -> DTO 변환 메서드
     public EmotionDto toDto() {
-        return new EmotionDto(emotionId, emotionKeyword);
+        return new EmotionDto(emotionId, emotionWord, emotionType);
     }
 }
