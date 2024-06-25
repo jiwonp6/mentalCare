@@ -1,14 +1,12 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.McUserDto;
+import com.busanit.mentalCare.dto.McUserLoginSuccessDto;
 import com.busanit.mentalCare.dto.McUserUpdateDto;
 import com.busanit.mentalCare.jwt.JwtUtil;
-import com.busanit.mentalCare.model.McUser;
-import com.busanit.mentalCare.repository.McUserRepository;
 import com.busanit.mentalCare.service.CustomMcUserDetailsService;
 import com.busanit.mentalCare.service.McUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,9 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/mcUser")
 @RestController
@@ -43,7 +39,7 @@ public class McUserController {
     /* 메소드 */
     // 로그인
     @PostMapping("/authLogin")
-    public Map<String, String> authToken(@RequestBody McUserDto userDto) throws Exception {
+    public McUserLoginSuccessDto authToken(@RequestBody McUserDto userDto) throws Exception {
         // 스프링 시큐리티 인증관리자로 사용자로부터 받은 정보로 인증 토큰을 생성하여 인증
         try {
             authenticationManager.authenticate(
@@ -54,31 +50,44 @@ public class McUserController {
             );
         } catch (BadCredentialsException e) {
             // 인증 실패되는 경우
+            System.out.println("인증 실패");
             throw new Exception("fail to auth");
         }
         // 인증된 사용자 정보를 가져옴
         UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUserId());
+        McUserDto byUserId = userService.getByUserId(userDto.getUserId());
 
         // 토큰 생성하기 (UserDetails 정보 기반)
         String jwt = jwtUtil.generateToken(userDetails);
 
-        // 토큰 정보를 담은 Map 을 응답으로 반환
-        Map<String, String> response = new HashMap<>();
-        response.put("jwt", jwt);
+        // 토큰 정보를 담은 McUserLoginDto 객체 반환
+        McUserLoginSuccessDto mcUserLogin
+                = new McUserLoginSuccessDto(
+                        userDto.getUserId(),
+                        byUserId.getUserPw(),
+                        byUserId.getUserNickname(),
+                        byUserId.getUserGender(),
+                        byUserId.getUserBirth(),
+                        byUserId.getUserEmail(),
+                        byUserId.getUserPhonenumber(),
+                        byUserId.isUserSecession(), jwt
+                );
 
-
-        return response;
+        return mcUserLogin;
     }
 
-    // Id로 유저 찾기
-    @GetMapping("/findByUserId")
-    public ResponseEntity<McUserDto> findByUserId(@RequestParam String userId) {
-        McUserDto userDto = userService.findByUserId(userId);
+    // Id로 유저 정보 반환
+    @GetMapping("/getByUserId")
+    public ResponseEntity<McUserDto> getByUserId(@RequestParam String userId) {
+        McUserDto userDto = userService.getByUserId(userId);
+        if (userDto == null) {
+            throw new RuntimeException("User Not Found");
+        }
         return ResponseEntity.ok(userDto);
     }
 
     // 회원 정보 수정
-    @PostMapping("/updateUser")
+    @PutMapping("/updateUser")
     public ResponseEntity<McUserDto> updateUser(@RequestParam String userId, @RequestBody McUserUpdateDto userUpdateDto) {
         McUserDto userDto = userService.updateUser(userId, userUpdateDto);
         return ResponseEntity.ok(userDto);
@@ -88,16 +97,17 @@ public class McUserController {
     @PostMapping("/createUser")
     public ResponseEntity<McUserDto> createUser(@RequestBody McUserDto userDto) {
         System.out.println(userDto);
+        
         McUserDto mcUserDto = userService.saveUser(userDto);
 
         return ResponseEntity.ok(mcUserDto);
     }
 
     // 회원 탈퇴
-    @PostMapping("/withdrawUser")
-    public ResponseEntity<Boolean> withdrawUser(@RequestParam String userId, @RequestBody McUserDto checkUserDto) throws Exception {
-        Boolean result = userService.withdrawUser(userId, checkUserDto);
-        return ResponseEntity.ok(result);
+    @PutMapping("/withdrawUser")
+    public ResponseEntity<McUserDto> withdrawUser(@RequestParam String userId) throws Exception {
+        McUserDto mcUserDto = userService.withdrawUser(userId);
+        return ResponseEntity.ok(mcUserDto);
     }
 
     // 전체 회원 조회

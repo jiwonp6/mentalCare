@@ -43,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // 토큰에 사용자 이름은 존재하는데, SecurityContextHolder 에 인증이 되지 않은 경우
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // 사용자 정보를 불러옴
-            UserDetails userDetails = (UserDetails) this.mc_userService.findByUserId(userId);
+            UserDetails userDetails = (UserDetails) this.mc_userService.getByUserId(userId);
 
             // 사용자 정보를 불러오니, 토큰이 유효한 경우
             if (jwtUtil.validateToken(jwt, userDetails)) {
