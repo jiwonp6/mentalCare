@@ -10,9 +10,10 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class McUserDto {
+public class McUserUpdateDto {
     private String userId;
     private String userPw;
+    private String userPwNew;
     private String userNickname;
     private char userGender;
     private String userBirth;
@@ -26,7 +27,7 @@ public class McUserDto {
         // DTO -> 엔티티 필드 매핑
         McUser user = McUser.builder()
                 .userId(userId)
-                .userPw(userPw)
+                .userPw(userPwNew)
                 .userNickname(userNickname)
                 .userGender(userGender)
                 .userBirth(userBirth)
