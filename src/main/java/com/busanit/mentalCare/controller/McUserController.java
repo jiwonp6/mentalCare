@@ -96,10 +96,7 @@ public class McUserController {
     // 회원 가입
     @PostMapping("/createUser")
     public ResponseEntity<McUserDto> createUser(@RequestBody McUserDto userDto) {
-        System.out.println(userDto);
-        
         McUserDto mcUserDto = userService.saveUser(userDto);
-
         return ResponseEntity.ok(mcUserDto);
     }
 
