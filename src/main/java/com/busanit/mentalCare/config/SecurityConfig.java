@@ -47,7 +47,9 @@ public class SecurityConfig {
                 // HTTP 요청에 대한 권한 설정
                 .authorizeRequests(auth -> auth
                         // 해당 패턴에 대해서는 권한 허용
-                        .requestMatchers("/mcUser/**", "/auth", "/jwt/**",
+                        .requestMatchers(
+                                "/mcUser/**", "/mcUserData/**", "/emotion/**", "/myEmotion/**", "/emotionDiary/**", "/emotion/**",
+                                "/auth", "/jwt/**",
                                 // SpringDoc Open API 주소 허용
                                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
 

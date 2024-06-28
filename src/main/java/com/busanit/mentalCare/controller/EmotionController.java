@@ -5,20 +5,24 @@ import com.busanit.mentalCare.model.Emotion;
 import com.busanit.mentalCare.service.EmotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/emotion")
 @RestController
 public class EmotionController {
     @Autowired
     EmotionService emotionService;
 
-    
     /* 메소드 */
+    // 이모션 id로 정보 들고오기
+    @GetMapping("/getEmotionById")
+    public ResponseEntity<EmotionDto> getEmotionById(Long emotionId) {
+        EmotionDto emotionDto = emotionService.getEmotionById(emotionId);
+        return ResponseEntity.ok(emotionDto);
+    }
+
     // 이모션 추가
     @PostMapping("/createEmotion")
     public ResponseEntity<String> createEmotion(@RequestBody EmotionDto emotionDto) {

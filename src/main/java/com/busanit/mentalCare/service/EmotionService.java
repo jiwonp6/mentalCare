@@ -15,6 +15,11 @@ public class EmotionService {
 
     private final EmotionRepository emotionRepository;
 
+    //
+    public EmotionDto getEmotionById(Long emotionId) {
+        return emotionRepository.findById(emotionId).orElse(null).toDto();
+    }
+
     // 이모션 추가
     public EmotionDto saveEmotion(EmotionDto emotionDto) {
         return emotionRepository.save(emotionDto.toEntity()).toDto();

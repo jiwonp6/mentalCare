@@ -37,6 +37,7 @@ public class McUserController {
 
 
     /* 메소드 */
+    /* 이용자 */
     // 로그인
     @PostMapping("/authLogin")
     public McUserLoginSuccessDto authToken(@RequestBody McUserDto userDto) throws Exception {
@@ -96,10 +97,7 @@ public class McUserController {
     // 회원 가입
     @PostMapping("/createUser")
     public ResponseEntity<McUserDto> createUser(@RequestBody McUserDto userDto) {
-        System.out.println(userDto);
-        
         McUserDto mcUserDto = userService.saveUser(userDto);
-
         return ResponseEntity.ok(mcUserDto);
     }
 
@@ -110,6 +108,7 @@ public class McUserController {
         return ResponseEntity.ok(mcUserDto);
     }
 
+    /* 관리자 */
     // 전체 회원 조회
     @GetMapping("/AllUsers")
     public ResponseEntity<List<McUserDto>> listOfAllUsers() {
