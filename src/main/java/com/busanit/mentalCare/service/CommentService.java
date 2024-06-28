@@ -26,17 +26,18 @@ public class CommentService {
     private UserRepository userRepository;
 
 
-
     // 엔티티 -> DTO로 변환하여 전달
+    @Transactional
     public List<CommentDTO> getAllComments() {
         List<Comment> comments = commentRepository.findAll();
         return comments.stream().map(Comment::toDTO).toList();
     }
 
-//    public CommentDTO getCommentById(Long comment_id) {
-//        Comment comment = commentRepository.findById(comment_id).orElse(null);
-//        return comment.toDTO();
-//    }
+    @Transactional
+    public List<CommentDTO> getCommentByBoardId(Long boardId) {
+        List<Comment> commentList = commentRepository.findByBoardBoardId(boardId);
+        return commentList.stream().map(Comment::toDTO).toList();
+    }
 
     @Transactional
     public CommentDTO createComment(CommentDTO dto) {
@@ -47,14 +48,15 @@ public class CommentService {
         }
 
         Comment comment = dto.toEntity(board, user);
+        int boardCommentCount = comment.getBoard().getBoardCommentCount();
+        comment.getBoard().setBoardCommentCount(boardCommentCount + 1);
         Comment saved = commentRepository.save(comment);
         return saved.toDTO();
     }
 
     @Transactional
-    public CommentDTO updateComment(Long comment_id, CommentDTO updateComment) {
+    public CommentDTO updateComment(Long comment_id,  CommentDTO updateComment) {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
-
         if(comment != null) {
             if(updateComment.getCommentContent() != null) {
                 comment.setCommentContent(updateComment.getCommentContent());
@@ -68,18 +70,21 @@ public class CommentService {
     }
 
     @Transactional
-    public Boolean deleteComment(Long comment_id) {
+    public CommentDTO deleteComment(Long comment_id) {
         Comment comment = commentRepository.findById(comment_id).orElse(null);
         if(comment != null) {
-            commentRepository.delete(comment);
-            return true;
+            int boardCommentCount = comment.getBoard().getBoardCommentCount();
+            if(comment.getChildrenComments().isEmpty()) {
+                commentRepository.delete(comment);
+                comment.getBoard().setBoardCommentCount(boardCommentCount - 1);
+            } else {
+                comment.setCommentContent("삭제된 댓글입니다.");
+                comment.getBoard().setBoardCommentCount(boardCommentCount - 1);
+            }
+            return comment.toDTO();
         } else {
-            return false;
+            return null;
         }
     }
-
-
-
-
 
 }

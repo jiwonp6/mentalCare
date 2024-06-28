@@ -2,6 +2,8 @@ package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.BoardDTO;
 import com.busanit.mentalCare.model.Board;
+import com.busanit.mentalCare.model.TagType;
+import com.busanit.mentalCare.model.Time;
 import com.busanit.mentalCare.model.User;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.repository.CommentRepository;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,12 +28,25 @@ public class BoardService {
     @Autowired
     private UserRepository userRepository;
 
+
     // 모든 게시글 조회
     public List<BoardDTO> getAllBoards() {
         List<Board> boards = boardRepository.findAll();
 
         return boards.stream().map(Board::toDTO).toList();
     }
+
+    public List<BoardDTO> getBoardByTagType(TagType tag) {
+        List<Board> board = boardRepository.findByBoardTag(tag);
+        return board.stream().map(Board::toDTO).toList();
+    }
+
+    public BoardDTO getBoardById(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElse(null);
+        return board.toDTO();
+    }
+
+
 
 
     // 게시글 생성
@@ -41,6 +57,7 @@ public class BoardService {
         System.out.println("board entity:"+ dto.toEntity(user));
 
         Board saved = boardRepository.save(dto.toEntity(user));
+        saved.setCalculateTime(Time.getTimeDifference(saved.getBoardTime(), LocalDateTime.now()));
         return saved.toDTO();
     }
 
@@ -57,6 +74,10 @@ public class BoardService {
             if (board.getBoardContent() != null) {
                 board.setBoardContent(updateBoard.getBoardContent());
             }
+            // 게시글 테그 변경
+            if(board.getBoardTag() != null) {
+                board.setBoardTag(updateBoard.getBoardTag());
+            }
             // 글 작성자는 바꿀 수 없도록 함
             return boardRepository.save(board).toDTO();
         } else {
@@ -64,15 +85,14 @@ public class BoardService {
         }
     }
 
-    // 게시글 삭제
     @Transactional
-    public Boolean DeleteBoard(Long board_id) {
+    public BoardDTO DeleteBoard(Long board_id) {
         Board board = boardRepository.findById(board_id).orElse(null);
         if(board != null) {
             boardRepository.delete(board);
-            return true;
+            return board.toDTO();
         } else {
-            return false;
+            return null;
         }
     }
 
@@ -98,19 +118,5 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElse(null);
         return board;
     }
-
-
-
-//    public List<BoardDTO> updateCountJPQL(String board_id, boolean b) {
-//        List<Board> boardList;
-//        if (b) {
-//            boardList = boardRepository.addCountJPQL(board_id);
-//        } else {
-//            boardList = boardRepository.subCountJPQL(board_id);
-//        }
-//        return boardList.stream().map(Board::toDTO).toList();
-//    }
-
-
 
 }

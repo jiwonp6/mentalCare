@@ -20,7 +20,7 @@ public class HeartService {
     private final HeartRepository heartRepository;
     private final UserRepository userRepository;
 
-    public void addHeart(Long boardId, User user) {
+    public Integer addHeart(Long boardId, User user) {
 
         Board board = boardService.findBoardId(boardId);
         User findUser = userRepository.findById(user.getUserId()).orElse(null);
@@ -29,9 +29,11 @@ public class HeartService {
             board.setBoardLikeCount(board.getBoardLikeCount()+1);
             // heartRepository에 userId랑 boardId값 저장
             heartRepository.save(new Heart(user, board));
+            return board.getBoardLikeCount();
         } else {
             board.setBoardLikeCount(board.getBoardLikeCount()-1);
             heartRepository.deleteByUserAndBoard(user, board);
+            return board.getBoardLikeCount();
         }
     }
 

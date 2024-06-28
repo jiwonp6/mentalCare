@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/boardHeart")
@@ -16,13 +19,13 @@ public class HeartController {
     private final HeartService heartService;
     private final UserService userService;
 
-    @PostMapping("up/{boardId}")
-    public ResponseEntity addHeart(@PathVariable("boardId") Long boardId, @RequestBody User user) {
-        heartService.addHeart(boardId, user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @PostMapping("/up/{boardId}")
+    public ResponseEntity<Map<String, Integer>> addHeart(@PathVariable("boardId") Long boardId, @RequestBody User user) {
+        Integer count = heartService.addHeart(boardId, user);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("count", count);
+        System.out.println(count);
+        System.out.println(map);
+        return ResponseEntity.ok(map);
     }
-
-
-
-
 }

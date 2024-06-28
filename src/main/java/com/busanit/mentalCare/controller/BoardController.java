@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.BoardDTO;
+import com.busanit.mentalCare.model.TagType;
 import com.busanit.mentalCare.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,10 +41,25 @@ public class BoardController {
         return boardService.getBoardByTitleContaining(boardTitle);
     }
 
+    @GetMapping("TagType/{tagType}")
+    public List<BoardDTO> getBoardByTagType(@PathVariable TagType tagType) {
+        return boardService.getBoardByTagType(tagType);
+    }
+
     @GetMapping
     public ResponseEntity<List<BoardDTO>> getAllBoards() {
         List<BoardDTO> boards = boardService.getAllBoards();
         return ResponseEntity.ok(boards);
+    }
+
+    @GetMapping("/{boardId}")
+    public ResponseEntity<BoardDTO> getBoardById(@PathVariable Long boardId) {
+        BoardDTO board= boardService.getBoardById(boardId);
+        if(board == null ) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(board);
+        }
     }
 
 
@@ -51,19 +67,22 @@ public class BoardController {
     @PutMapping("update/{boardId}")
     public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long boardId, @RequestBody BoardDTO updateBoard) {
         BoardDTO board = boardService.updateBoard(boardId, updateBoard);
-
-        if (board == null) {
+        if(board == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(board);
     }
 
     // DELETE (게시글 삭제)
     @DeleteMapping("delete/{boardId}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable Long boardId) {
-        if (!boardService.DeleteBoard(boardId)) {
+    public ResponseEntity<BoardDTO> deleteBoard(@PathVariable Long boardId) {
+        BoardDTO boardDTO = boardService.DeleteBoard(boardId);
+        if(boardDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(boardDTO);
     }
+
+
 }
