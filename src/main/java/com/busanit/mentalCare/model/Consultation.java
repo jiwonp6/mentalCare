@@ -1,5 +1,7 @@
 package com.busanit.mentalCare.model;
 
+import com.busanit.mentalCare.dto.ConsultationDTO;
+import com.busanit.mentalCare.dto.ReservationDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,5 +31,14 @@ public class Consultation {
     @OneToOne
     @JoinColumn(name = "reservationId")
     private Reservation reservation;
+
+    public ConsultationDTO toDTO() {
+        Long ReservationId = null;
+        if (reservation != null) {
+            ReservationId = reservation.getReservationId();
+            return new ConsultationDTO(ReservationId, consultationId, consultationDetails, myChange, picture);
+        }
+        return null;
+    }
 
 }

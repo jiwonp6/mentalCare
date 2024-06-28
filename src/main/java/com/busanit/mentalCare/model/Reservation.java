@@ -2,8 +2,10 @@ package com.busanit.mentalCare.model;
 
 import com.busanit.mentalCare.dto.ReservationDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,6 +13,7 @@ import java.time.LocalTime;
 @Data
 @Builder
 @Entity
+@NoArgsConstructor @AllArgsConstructor
 @Table(name = "reservation")
 public class Reservation {
     @Id
@@ -34,7 +37,8 @@ public class Reservation {
         String hospitalId = null;
         if (hospital != null) {
             hospitalId = hospital.getHospitalId();
+            return new ReservationDTO(reservationId, userId, reservationDate, treatmentDate, treatmentTime, hospitalId);
         }
-        return  new ReservationDTO(reservationId, userId, reservationDate, treatmentDate, treatmentTime);
+        return null;
     }
 }

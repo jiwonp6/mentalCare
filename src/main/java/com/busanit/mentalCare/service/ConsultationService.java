@@ -1,7 +1,10 @@
 package com.busanit.mentalCare.service;
 
+import com.busanit.mentalCare.dto.ConsultationDTO;
 import com.busanit.mentalCare.model.Consultation;
+import com.busanit.mentalCare.model.Reservation;
 import com.busanit.mentalCare.repository.ConsultationRepository;
+import com.busanit.mentalCare.repository.ReservationRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,8 @@ import java.util.List;
 public class ConsultationService {
 
     @Autowired
+    ReservationRepository reservationRepository;
+    @Autowired
     private ConsultationRepository consultationRepository;
 
     public List<Consultation> getAllConsultation() { return consultationRepository.findAll(); }
@@ -21,7 +26,13 @@ public class ConsultationService {
     }
 
     @Transactional
-    public Consultation createconsultation (Consultation consultation) { return consultationRepository.save(consultation); }
+    public ConsultationDTO createConsultation (ConsultationDTO consultationDto) {
+        Long reservationId = consultationDto.getReservationId();
+        Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
+        Consultation entity = consultationDto.toEntity(reservation);
+        Consultation save = consultationRepository.save(entity);
+        return save.toDTO();
+    }
 
     @Transactional
     public Consultation updateConsultation(Long consultationId, Consultation updateConsultation) {

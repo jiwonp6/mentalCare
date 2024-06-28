@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/mcUser/**", "/auth", "/jwt/**",
                                 // SpringDoc Open API 주소 허용
                                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-
+                        .requestMatchers("/api/hospitals/**", "/reservation/**", "/consultation/**").permitAll() // 개발용
                         // 그 외 모든 요청에 대해서 인증이 필요함
                         .anyRequest().authenticated()
                 )

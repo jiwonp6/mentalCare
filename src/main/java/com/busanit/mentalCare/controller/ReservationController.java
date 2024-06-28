@@ -1,7 +1,9 @@
 package com.busanit.mentalCare.controller;
 
+import com.busanit.mentalCare.dto.ReservationDTO;
 import com.busanit.mentalCare.model.Reservation;
 import com.busanit.mentalCare.repository.ReservationRepository;
+import com.busanit.mentalCare.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +14,13 @@ import java.util.List;
 public class ReservationController {
 
     @Autowired
+    private ReservationService reservationService;
+    @Autowired
     private ReservationRepository reservationRepository;
 
     @PostMapping
-    public Reservation createReservation(@RequestBody Reservation reservation) {
-        return reservationRepository.save(reservation);
+    public ReservationDTO createReservation(@RequestBody ReservationDTO reservationDTO) {
+        return reservationService.createReservation(reservationDTO);
     }
 
     @GetMapping

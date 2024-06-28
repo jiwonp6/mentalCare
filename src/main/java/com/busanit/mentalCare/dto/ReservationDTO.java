@@ -1,5 +1,6 @@
 package com.busanit.mentalCare.dto;
 
+import com.busanit.mentalCare.model.Hospital;
 import com.busanit.mentalCare.model.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,14 +18,16 @@ public class ReservationDTO {
     private LocalDate reservationDate;
     private LocalDate treatmentDate;
     private LocalTime treatmentTime;
+    private String hospitalId;
 
-    public Reservation toEntity() {
+    public Reservation toEntity(Hospital hospital) {
         return Reservation.builder()
                 .reservationId(reservationId)
                 .userId(userId)
                 .reservationDate(reservationDate)
                 .treatmentDate(treatmentDate)
                 .treatmentTime(treatmentTime)
+                .hospital(hospital)
                 .build();
     }
 

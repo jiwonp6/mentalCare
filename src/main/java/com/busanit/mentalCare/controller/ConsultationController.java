@@ -1,7 +1,9 @@
 package com.busanit.mentalCare.controller;
 
+import com.busanit.mentalCare.dto.ConsultationDTO;
 import com.busanit.mentalCare.model.Consultation;
 import com.busanit.mentalCare.repository.ConsultationRepository;
+import com.busanit.mentalCare.service.ConsultationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,14 +14,13 @@ import java.util.List;
 public class ConsultationController {
 
     @Autowired
+    private ConsultationService consultationService;
+    @Autowired
     private ConsultationRepository consultationRepository;
 
     @PostMapping
-    public Consultation createConsultation(@RequestBody Consultation consultation) {
-        System.out.println(consultation);
-        Consultation save = consultationRepository.save(consultation);
-
-        return consultationRepository.save(consultation);
+    public ConsultationDTO createConsultation(@RequestBody ConsultationDTO consultationDTO) {
+        return consultationService.createConsultation(consultationDTO);
     }
 
     @GetMapping
