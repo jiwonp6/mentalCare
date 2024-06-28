@@ -3,9 +3,11 @@ package com.busanit.mentalCare.service;
 import com.busanit.mentalCare.dto.CommentDTO;
 import com.busanit.mentalCare.model.Board;
 import com.busanit.mentalCare.model.Comment;
+import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.model.User;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.repository.CommentRepository;
+import com.busanit.mentalCare.repository.McUserRepository;
 import com.busanit.mentalCare.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ public class CommentService {
     private BoardRepository boardRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private McUserRepository userRepository;
 
 
     // 엔티티 -> DTO로 변환하여 전달
@@ -42,7 +44,7 @@ public class CommentService {
     @Transactional
     public CommentDTO createComment(CommentDTO dto) {
         Board board = boardRepository.findById(dto.getBoardId()).orElse(null);
-        User user = userRepository.findByUserNickname(dto.getUserNickname());
+        McUser user = userRepository.findByUserNickname(dto.getUserNickname());
         if(board == null) {
             throw new RuntimeException("존재하지 않은 게시판");
         }

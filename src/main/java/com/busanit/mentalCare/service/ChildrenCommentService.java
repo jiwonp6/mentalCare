@@ -3,11 +3,9 @@ package com.busanit.mentalCare.service;
 import com.busanit.mentalCare.dto.ChildrenCommentDTO;
 import com.busanit.mentalCare.model.ChildrenComment;
 import com.busanit.mentalCare.model.Comment;
+import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.model.User;
-import com.busanit.mentalCare.repository.BoardRepository;
-import com.busanit.mentalCare.repository.ChildrenCommentRepository;
-import com.busanit.mentalCare.repository.CommentRepository;
-import com.busanit.mentalCare.repository.UserRepository;
+import com.busanit.mentalCare.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ public class ChildrenCommentService {
     private BoardRepository boardRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private McUserRepository userRepository;
 
     @Autowired
     private ChildrenCommentRepository childrenRepository;
@@ -44,7 +42,7 @@ public class ChildrenCommentService {
 
     @Transactional
     public ChildrenCommentDTO createChildren(ChildrenCommentDTO dto) {
-        User user = userRepository.findByUserNickname(dto.getUserNickname());
+        McUser user = userRepository.findByUserNickname(dto.getUserNickname());
         Comment comment = commentRepository.findById(dto.getCommentId()).orElse(null);
         if(comment == null) {
             throw new RuntimeException("댓글이 존재하지 않는 답글");

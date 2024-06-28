@@ -2,9 +2,11 @@ package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.model.Board;
 import com.busanit.mentalCare.model.Heart;
+import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.model.User;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.repository.HeartRepository;
+import com.busanit.mentalCare.repository.McUserRepository;
 import com.busanit.mentalCare.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +20,12 @@ public class HeartService {
     private final BoardService boardService;
     private final BoardRepository boardRepository;
     private final HeartRepository heartRepository;
-    private final UserRepository userRepository;
+    private final McUserRepository userRepository;
 
-    public Integer addHeart(Long boardId, User user) {
+    public Integer addHeart(Long boardId, McUser user) {
 
         Board board = boardService.findBoardId(boardId);
-        User findUser = userRepository.findById(user.getUserId()).orElse(null);
+        McUser findUser = userRepository.findByUserId(user.getUserId());
         if(!heartRepository.existsByUserAndBoard(findUser, board)) {
             // 호출되면 board에 있는 count 증가
             board.setBoardLikeCount(board.getBoardLikeCount()+1);

@@ -37,7 +37,7 @@ public class Board {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private McUser user;
 
     @CreatedDate
     @Column(name = "board_time")

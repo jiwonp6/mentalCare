@@ -1,9 +1,6 @@
 package com.busanit.mentalCare.dto;
 
-import com.busanit.mentalCare.model.Board;
-import com.busanit.mentalCare.model.ChildrenComment;
-import com.busanit.mentalCare.model.Comment;
-import com.busanit.mentalCare.model.User;
+import com.busanit.mentalCare.model.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +24,7 @@ public  class CommentDTO {
 
 
 
-    public Comment toEntity(Board board, User user) {
+    public Comment toEntity(Board board, McUser user) {
         Comment comment = Comment.builder()
                 .commentId(commentId)
                 .commentContent(commentContent)

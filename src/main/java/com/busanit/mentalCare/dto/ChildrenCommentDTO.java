@@ -2,7 +2,7 @@ package com.busanit.mentalCare.dto;
 
 import com.busanit.mentalCare.model.ChildrenComment;
 import com.busanit.mentalCare.model.Comment;
-import com.busanit.mentalCare.model.User;
+import com.busanit.mentalCare.model.McUser;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class ChildrenCommentDTO {
 
 
 
-    public ChildrenComment toEntity(Comment comment, User user) {
+    public ChildrenComment toEntity(Comment comment, McUser user) {
         return ChildrenComment.builder()
                 .childrenId(childrenId)
                 .childrenContent(childrenContent)

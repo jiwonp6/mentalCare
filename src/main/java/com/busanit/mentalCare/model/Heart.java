@@ -18,13 +18,13 @@ public class Heart {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private McUser user;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
 
-    public Heart (User user, Board board) {
+    public Heart (McUser user, Board board) {
         this.user = user;
         this.board = board;
     }
