@@ -21,7 +21,7 @@ public class HospitalController {
     @GetMapping
     public List<Hospital> getAllHospital() { return  hospitalRepository.findAll(); }
 
-    @GetMapping("/{id2}")
+    @GetMapping("/{hospitalId}")
     public Hospital getHospitalById(@PathVariable String hospitalId) {
         return hospitalRepository.findById(hospitalId).orElse(null);
     }

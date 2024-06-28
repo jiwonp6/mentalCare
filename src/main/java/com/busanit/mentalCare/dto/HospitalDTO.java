@@ -16,24 +16,23 @@ public class HospitalDTO {
     private String hospitalLocation;
     private String hospitalWebsite;
     private String hospitalCall;
-    private Time monStartTime;
-    private Time monEndTime;
-    private Time tueStartTime;
-    private Time tueEndTime;
-    private Time wedStartTime;
-    private Time wedEndTime;
-    private Time thuStartTime;
-    private Time thuEndTime;
-    private Time friStartTime;
-    private Time friEndTime;
-    private Time satStartTime;
-    private Time satEndTime;
-    private Time sunStartTime;
-    private Time sunEndTime;
+    private String monStartTime;
+    private String monEndTime;
+    private String tueStartTime;
+    private String tueEndTime;
+    private String wedStartTime;
+    private String wedEndTime;
+    private String thuStartTime;
+    private String thuEndTime;
+    private String friStartTime;
+    private String friEndTime;
+    private String satStartTime;
+    private String satEndTime;
+    private String sunStartTime;
+    private String sunEndTime;
     private String sunHoliday;
-    private Time lunchtime;
+    private String lunchtime;
     private String holiday;
-
 
     public Hospital toEntity() {
         return Hospital.builder()

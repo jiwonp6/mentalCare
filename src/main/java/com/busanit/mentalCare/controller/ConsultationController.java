@@ -25,12 +25,12 @@ public class ConsultationController {
     @GetMapping
     public List<Consultation> getAllConsultation() { return consultationRepository.findAll(); }
 
-    @GetMapping("/{id}3")
+    @GetMapping("/{id}")
     public Consultation getConsultationById(@PathVariable Long consultationId) {
         return consultationRepository.findById(consultationId).orElse(null);
     }
 
-    @PutMapping("/{id}3")
+    @PutMapping("/{id}")
     public Consultation updateConsultation(@PathVariable Long consultationId, @RequestBody Consultation updateConsultation) {
         Consultation consultation = consultationRepository.findById(consultationId).orElse(null);
         if (consultation != null ) {
@@ -46,17 +46,16 @@ public class ConsultationController {
         }
     }
 
-    @DeleteMapping("/{id}3")
+    @DeleteMapping("/{id}")
     public String deleteConsultataion(@PathVariable Long consultationId) {
         Consultation consultation = consultationRepository.findById(consultationId).orElse(null);
         if (consultation != null) {
             consultationRepository.delete(consultation);
             return "성공적으로 삭제되었습니다.";
         } else {
-            return "존재하지 않는 상담내역입니다.";
+            return "존재하지 않는 예약정보입니다.";
         }
 
     }
 
 }
-

@@ -3,9 +3,7 @@ package com.busanit.mentalCare.model;
 import com.busanit.mentalCare.dto.HospitalDTO;
 import com.busanit.mentalCare.dto.ReservationDTO;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -39,55 +37,55 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "hospital")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Hospital {
-    @Getter
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hospitalId")
+    @Column(name = "hospital_id")
     private String hospitalId;
-    @Column(name = "hospitalName")
+    @Column(name = "hospital_name")
     private String hospitalName;
-    @Column(name = "hospitalLocation")
+    @Column(name = "hospital_location")
     private String hospitalLocation;
     @Column(name = "hospitalWebsite")
     private String hospitalWebsite;
     @Column(name = "hospitalCall")
     private String hospitalCall;
     @Column(name = "monStartTime")
-    private Time monStartTime;
+    private String monStartTime;
     @Column(name = "monEndTime")
-    private Time monEndTime;
+    private String monEndTime;
     @Column(name = "tueStartTime")
-    private Time tueStartTime;
+    private String tueStartTime;
     @Column(name = "tueEndTime")
-    private Time tueEndTime;
+    private String tueEndTime;
     @Column(name = "wedStartTime")
-    private Time wedStartTime;
+    private String wedStartTime;
     @Column(name = "wedEndTime")
-    private Time wedEndTime;
+    private String wedEndTime;
     @Column(name = "thuStartTime")
-    private Time thuStartTime;
+    private String thuStartTime;
     @Column(name = "thuEndTime")
-    private Time thuEndTime;
+    private String thuEndTime;
     @Column(name = "friStartTime")
-    private Time friStartTime;
+    private String friStartTime;
     @Column(name = "friEndTime")
-    private Time friEndTime;
+    private String friEndTime;
     @Column(name = "satStartTime")
-    private Time satStartTime;
+    private String satStartTime;
     @Column(name = "satEndTime")
-    private Time satEndTime;
+    private String satEndTime;
     @Column(name = "sunStartTime")
-    private Time sunStartTime;
+    private String sunStartTime;
     @Column(name = "sunEndTime")
-    private Time sunEndTime;
+    private String sunEndTime;
     @Column(name = "sunHoliday")
     private String sunHoliday;
     @Column(name = "lunchtime")
-    private Time lunchtime;
+    private String lunchtime;
     @Column(name = "holiday")
     private String holiday;
-
 
     //  양방향일때
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -105,4 +103,3 @@ public class Hospital {
                 friEndTime, satStartTime, satEndTime, sunStartTime, sunEndTime, sunHoliday, lunchtime, holiday);
     }
 }
-

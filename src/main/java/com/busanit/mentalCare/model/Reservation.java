@@ -25,19 +25,16 @@ public class Reservation {
     private LocalDate treatmentDate;
     @Column(name = "treatmentTime")
     private LocalTime treatmentTime;
-    @Column(name = "hospitalName")
-    private String hospitalName;
 
     @ManyToOne
-    @JoinColumn(name = "hospitalName")
+    @JoinColumn(name = "hospitalId")
     private Hospital hospital;
 
     public ReservationDTO toDTO() {
-        String hospitalId = String.valueOf(0L);
+        String hospitalId = null;
         if (hospital != null) {
             hospitalId = hospital.getHospitalId();
         }
         return  new ReservationDTO(reservationId, userId, reservationDate, treatmentDate, treatmentTime);
     }
 }
-
