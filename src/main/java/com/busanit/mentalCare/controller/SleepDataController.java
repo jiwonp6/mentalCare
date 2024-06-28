@@ -17,6 +17,16 @@ public class SleepDataController {
     SleepDataService userSleepDataService;
 
     /* 메소드 */
+    // Id로 오늘 데이터 반환
+    @GetMapping("/getTodaySleepData")
+    public ResponseEntity<SleepDataDto> getTodaySleepData(@RequestParam String userId) {
+        SleepDataDto sldDto = userSleepDataService.getTodaySleepData(userId);
+        if (sldDto == null) {
+
+        }
+        return ResponseEntity.ok(sldDto);
+    }
+
     // Id로 유저 선택날짜 데이터 반환
     @GetMapping("/getSelectedDateSleepData")
     public ResponseEntity<SleepDataDto> getSelectedDateSleepData(@RequestParam String userId, @RequestParam String sldDate) {

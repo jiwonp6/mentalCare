@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.EmotionDiaryDto;
+import com.busanit.mentalCare.dto.EmotionDiaryViewDto;
 import com.busanit.mentalCare.dto.EmotionDiaryWriteDto;
 import com.busanit.mentalCare.model.Emotion;
 import com.busanit.mentalCare.model.EmotionDiary;
@@ -10,6 +11,7 @@ import com.busanit.mentalCare.repository.EmotionRepository;
 import com.busanit.mentalCare.repository.McUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 // 스프링 시큐리티의 클래스를 상속받지 않는 UserService
 @Service
@@ -27,9 +29,23 @@ public class EmotionDiaryService {
     }
 
     // 해당 날짜 감정일지
-    public EmotionDiaryDto getSelectedDateEmotionDiary(String userId, String edDate) {
+    public EmotionDiaryViewDto getSelectedDateEmotionDiary(String userId, String edDate) {
         EmotionDiary emotionDiary = emotionDiaryRepository.selectedDateEmotionDiary(userId, edDate);
-        return emotionDiary.toDto();
+
+        String emotionType = emotionDiary.getEmotion().getEmotionType();
+        String emotionWord = emotionDiary.getEmotion().getEmotionWord();
+
+        EmotionDiaryViewDto edViewDto = EmotionDiaryViewDto.builder()
+                .edId(emotionDiary.getEdId())
+                .userId(userId)
+                .emotionId(emotionDiary.getEdId())
+                .emotionWord(emotionWord)
+                .emotionType(emotionType)
+                .edReason(emotionDiary.getEdReason())
+                .edDate(emotionDiary.getEdDate())
+                .build();
+
+        return edViewDto;
     }
 
     // 감정일지 작성
@@ -65,7 +81,8 @@ public class EmotionDiaryService {
     }
 
     // 감정일지 삭제
-    public Boolean deleteEmotionDiary(String userId, Long edId) {
+    @Transactional
+    public int deleteEmotionDiary(String userId, Long edId) {
         return emotionDiaryRepository.deleteEmotionDiary(userId, edId);
     }
 }

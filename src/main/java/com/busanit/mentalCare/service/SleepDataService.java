@@ -14,6 +14,18 @@ import org.springframework.stereotype.Service;
 public class SleepDataService {
     private final SleepDataRepository userSleepDataRepository;
 
+    // 오늘날짜 데이터 불러오기
+    public SleepDataDto getTodaySleepData(String userId) {
+        SleepData sld = userSleepDataRepository.todaySleepData(userId);
+
+        // 데이터가 없는 경우
+        if (sld == null) {
+
+        }
+
+        return sld.toDto();
+    }
+
     // 해당날짜 데이터 불러오기
     public SleepDataDto getSelectedDateSleepData(String userId, String stdDate) {
         SleepData sld = userSleepDataRepository.selectedDateSleepData(userId, stdDate);

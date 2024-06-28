@@ -12,6 +12,18 @@ import org.springframework.stereotype.Service;
 public class StressDataService {
     private final StressDataRepository userStressDataRepository;
 
+    // 오늘날짜 데이터 불러오기
+    public StressDataDto getTodayStressData(String userId) {
+        StressData std = userStressDataRepository.todayStressData(userId);
+
+        // 데이터가 없는 경우
+        if (std == null) {
+
+        }
+
+        return std.toDto();
+    }
+
     // 해당날짜 데이터 불러오기
     public StressDataDto getSelectedDateStressData(String userId, String stdDate) {
         StressData std = userStressDataRepository.selectedDateStressData(userId, stdDate);

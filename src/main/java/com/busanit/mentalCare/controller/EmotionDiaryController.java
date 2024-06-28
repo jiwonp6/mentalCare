@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.EmotionDiaryDto;
+import com.busanit.mentalCare.dto.EmotionDiaryViewDto;
 import com.busanit.mentalCare.service.EmotionDiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,9 @@ public class EmotionDiaryController {
 
     // 해당 날짜 감정일지
     @GetMapping("/getSelectedDateEmotionDiary")
-    public ResponseEntity<EmotionDiaryDto> getSelectedDateEmotionDiary(@RequestParam String userId, @RequestParam String edDate) {
-        EmotionDiaryDto emotionDiaryDto = emotionDiaryService.getSelectedDateEmotionDiary(userId, edDate);
-        return ResponseEntity.ok(emotionDiaryDto);
+    public ResponseEntity<EmotionDiaryViewDto> getSelectedDateEmotionDiary(@RequestParam String userId, @RequestParam String edDate) {
+        EmotionDiaryViewDto edViewDto = emotionDiaryService.getSelectedDateEmotionDiary(userId, edDate);
+        return ResponseEntity.ok(edViewDto);
     }
 
     // 감정일지 작성
@@ -43,10 +44,10 @@ public class EmotionDiaryController {
 
     // 감정일지 삭제
     @PutMapping("/deleteEmotionDiary")
-    public ResponseEntity<Boolean> deleteEmotionDiary(@RequestParam String userId, @RequestParam Long edId) {
-        Boolean result = emotionDiaryService.deleteEmotionDiary(userId, edId);
+    public ResponseEntity<Integer> deleteEmotionDiary(@RequestParam String userId, @RequestParam Long edId) {
+        int result = emotionDiaryService.deleteEmotionDiary(userId, edId);
         try {
-            if (result) {
+            if (result > 0) {
                 return ResponseEntity.ok(result);
             } else {
                 return ResponseEntity.ok(result);
