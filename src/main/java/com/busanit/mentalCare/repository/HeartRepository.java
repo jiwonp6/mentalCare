@@ -3,7 +3,6 @@ package com.busanit.mentalCare.repository;
 import com.busanit.mentalCare.model.Board;
 import com.busanit.mentalCare.model.Heart;
 import com.busanit.mentalCare.model.McUser;
-import com.busanit.mentalCare.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;

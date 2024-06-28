@@ -4,7 +4,6 @@ import com.busanit.mentalCare.dto.ChildrenCommentDTO;
 import com.busanit.mentalCare.model.ChildrenComment;
 import com.busanit.mentalCare.model.Comment;
 import com.busanit.mentalCare.model.McUser;
-import com.busanit.mentalCare.model.User;
 import com.busanit.mentalCare.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

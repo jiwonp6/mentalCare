@@ -5,7 +5,6 @@ import com.busanit.mentalCare.model.*;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.repository.CommentRepository;
 import com.busanit.mentalCare.repository.McUserRepository;
-import com.busanit.mentalCare.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

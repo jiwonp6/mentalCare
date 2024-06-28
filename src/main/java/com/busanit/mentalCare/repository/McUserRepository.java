@@ -1,7 +1,6 @@
 package com.busanit.mentalCare.repository;
 
 import com.busanit.mentalCare.model.McUser;
-import com.busanit.mentalCare.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
