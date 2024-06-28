@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/comments")
+@RequestMapping("/comment")
 @RestController
 public class CommentController {
 
@@ -18,7 +18,7 @@ public class CommentController {
 
     // 수정 기능
     @PutMapping("/{commentId}")
-    ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId, @RequestBody CommentDTO updatedComment) {
+    ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId,  @RequestBody CommentDTO updatedComment) {
         CommentDTO comment = commentService.updateComment(commentId, updatedComment);
         if(comment == null) {
             return ResponseEntity.notFound().build();
@@ -34,17 +34,23 @@ public class CommentController {
 
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
-        if(!commentService.deleteComment(commentId)) {
+    public ResponseEntity<CommentDTO> deleteComment(@PathVariable Long commentId) {
+        CommentDTO commentDTO = commentService.deleteComment(commentId);
+        if(commentDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(commentDTO);
     }
 
     @GetMapping
     public ResponseEntity<List<CommentDTO>> getAllComments() {
         List<CommentDTO> allComments = commentService.getAllComments();
         return ResponseEntity.ok(allComments);
+    }
+
+    @GetMapping("boardId/{boardId}")
+    public List<CommentDTO> getCommentByBoardId(@PathVariable("boardId") Long boardId) {
+        return commentService.getCommentByBoardId(boardId);
     }
 
 }

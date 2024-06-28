@@ -43,6 +43,12 @@ public class Board {
     @Column(name = "board_time")
     private LocalDateTime boardTime;
 
+    private String calculateTime;
+
+    public void setCalculateTime(String calculateTime) {
+        this.calculateTime = Time.getTimeDifference(boardTime, LocalDateTime.now());
+    }
+
     @Column(name = "board_content")
     private String boardContent;
 
@@ -56,26 +62,18 @@ public class Board {
     @Column(name = "board_like_count", nullable = false)
     private Integer boardLikeCount;
 
+    @ColumnDefault("0")
+    @Column(name = "board_comment_count", nullable = false)
+    private int boardCommentCount;
+
     // 엔티티 -> DTO
     public BoardDTO toDTO() {
         List<CommentDTO> commentDTOList = new ArrayList<>();
         if(comments != null) {
             commentDTOList = comments.stream().map(Comment::toDTO).toList();
         }
-        return new BoardDTO(boardId, boardTag, boardTitle, boardTime, boardContent,
-                user.getUserNickname(), boardLikeCount,commentDTOList);
-    }
-
-    // 엔티티 -> DTO 변환 메서드
-    public static Board createBoard(BoardDTO dto) {
-        Board board = new Board();
-        board.setBoardId(dto.getBoardId());
-        board.setBoardTitle(dto.getBoardTitle());
-        board.setBoardContent(dto.getBoardContent());
-        board.setBoardTag(dto.getBoardTag());
-        board.user.setUserNickname(dto.getUserNickname());
-        board.setBoardTime(dto.getBoardTime());
-        return board;
+        return new BoardDTO(boardId, boardTag, boardTitle, boardTime, calculateTime, boardContent,
+                user.getUserNickname(), boardLikeCount, boardCommentCount, commentDTOList);
     }
 
 }

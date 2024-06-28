@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 
+
 @Service
 public class UserService {
 
@@ -18,20 +19,18 @@ public class UserService {
     private UserRepository userRepository;
 
 
-
-    // Entity -> DTO로 변환하여 전달
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map(User::toDto).toList();
     }
 
-    // 조회 (일부 기사)
+
     public UserDto getUserById(Long user_id) {
         User user = userRepository.findById(user_id).orElse(null);
         return user.toDto();
     }
 
-    // 게시글 생성
+    // 생성
     @Transactional
     public UserDto createUser(@RequestBody UserDto dto) {
         User entity = dto.toEntity();

@@ -9,8 +9,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class Heart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

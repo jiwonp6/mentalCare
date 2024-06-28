@@ -39,7 +39,6 @@ public class UserDto {
                 //.user_joindate(user_joindate)
                 // .user_secession(user_secession)
                 .build();
-
         return user;
     }
 }
