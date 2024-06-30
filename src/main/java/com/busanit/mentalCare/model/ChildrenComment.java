@@ -29,7 +29,7 @@ public class ChildrenComment {
     // @JoinColumn(name = "user_id")
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private McUser user;
 
     @Column(name = "children_content")
     private String childrenContent;

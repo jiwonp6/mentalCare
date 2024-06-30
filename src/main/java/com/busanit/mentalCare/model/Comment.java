@@ -32,7 +32,7 @@ public class Comment {
     // @JoinColumn(name = "user_id")
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private McUser user;
 
     @Column(name = "comment_content")
     private String commentContent;

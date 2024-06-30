@@ -1,13 +1,10 @@
 package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.BoardDTO;
-import com.busanit.mentalCare.model.Board;
-import com.busanit.mentalCare.model.TagType;
-import com.busanit.mentalCare.model.Time;
-import com.busanit.mentalCare.model.User;
+import com.busanit.mentalCare.model.*;
 import com.busanit.mentalCare.repository.BoardRepository;
 import com.busanit.mentalCare.repository.CommentRepository;
-import com.busanit.mentalCare.repository.UserRepository;
+import com.busanit.mentalCare.repository.McUserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +23,7 @@ public class BoardService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private McUserRepository userRepository;
 
 
     // 모든 게시글 조회
@@ -52,7 +49,7 @@ public class BoardService {
     // 게시글 생성
     @Transactional
     public BoardDTO createBoard(@RequestBody BoardDTO dto) {
-        User user = userRepository.findByUserNickname(dto.getUserNickname());
+        McUser user = userRepository.findByUserNickname(dto.getUserNickname());
         System.out.println(user);
         System.out.println("board entity:"+ dto.toEntity(user));
 
@@ -96,7 +93,7 @@ public class BoardService {
         }
     }
 
-    // 저자를 통해 게시글 찾기
+    // 작성자를 통해 게시글 찾기
     public List<BoardDTO> getBoardByUserNickName(String userNickname) {
         List<Board> boardList = boardRepository.findByUserUserNickname(userNickname);
         return boardList.stream().map(Board::toDTO).toList();

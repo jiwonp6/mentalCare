@@ -1,10 +1,9 @@
 package com.busanit.mentalCare.controller;
 
-import com.busanit.mentalCare.model.User;
+import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.service.HeartService;
-import com.busanit.mentalCare.service.UserService;
+import com.busanit.mentalCare.service.McUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +16,10 @@ import java.util.Map;
 public class HeartController {
 
     private final HeartService heartService;
-    private final UserService userService;
+    private final McUserService userService;
 
     @PostMapping("/up/{boardId}")
-    public ResponseEntity<Map<String, Integer>> addHeart(@PathVariable("boardId") Long boardId, @RequestBody User user) {
+    public ResponseEntity<Map<String, Integer>> addHeart(@PathVariable("boardId") Long boardId, @RequestBody McUser user) {
         Integer count = heartService.addHeart(boardId, user);
         Map<String, Integer> map = new HashMap<>();
         map.put("count", count);
