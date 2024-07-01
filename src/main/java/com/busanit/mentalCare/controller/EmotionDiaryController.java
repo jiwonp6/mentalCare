@@ -16,9 +16,9 @@ public class EmotionDiaryController {
     /* 메소드 */
     // 오늘 감정일지
     @GetMapping("/getTodayEmotionDiary")
-    public ResponseEntity<EmotionDiaryDto> getTodayEmotionDiary(@RequestParam String userId) {
-        EmotionDiaryDto emotionDiaryDto = emotionDiaryService.getTodayEmotionDiary(userId);
-        return ResponseEntity.ok(emotionDiaryDto);
+    public ResponseEntity<EmotionDiaryViewDto> getTodayEmotionDiary(@RequestParam String userId) {
+        EmotionDiaryViewDto edViewDto = emotionDiaryService.getTodayEmotionDiary(userId);
+        return ResponseEntity.ok(edViewDto);
     }
 
     // 해당 날짜 감정일지

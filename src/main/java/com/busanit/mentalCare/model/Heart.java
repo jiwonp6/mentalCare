@@ -17,7 +17,7 @@ public class Heart {
     private Long heartId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private McUser user;
 
     @ManyToOne
