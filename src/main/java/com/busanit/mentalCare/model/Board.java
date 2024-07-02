@@ -36,7 +36,7 @@ public class Board {
     private String boardTitle;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private McUser user;
 
     @CreatedDate

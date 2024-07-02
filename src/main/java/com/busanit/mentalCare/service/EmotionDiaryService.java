@@ -23,9 +23,23 @@ public class EmotionDiaryService {
     private final EmotionRepository emotionRepository;
 
     // 오늘 감정일지
-    public EmotionDiaryDto getTodayEmotionDiary(String userId) {
+    public EmotionDiaryViewDto getTodayEmotionDiary(String userId) {
         EmotionDiary emotionDiary = emotionDiaryRepository.todayEmotionDiary(userId);
-        return emotionDiary.toDto();
+
+        String emotionType = emotionDiary.getEmotion().getEmotionType();
+        String emotionWord = emotionDiary.getEmotion().getEmotionWord();
+
+        EmotionDiaryViewDto edViewDto = EmotionDiaryViewDto.builder()
+                .edId(emotionDiary.getEdId())
+                .userId(userId)
+                .emotionId(emotionDiary.getEdId())
+                .emotionWord(emotionWord)
+                .emotionType(emotionType)
+                .edReason(emotionDiary.getEdReason())
+                .edDate(emotionDiary.getEdDate())
+                .build();
+
+        return edViewDto;
     }
 
     // 해당 날짜 감정일지

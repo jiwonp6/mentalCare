@@ -1,6 +1,5 @@
 package com.busanit.mentalCare.repository;
 
-import com.busanit.mentalCare.model.SleepData;
 import com.busanit.mentalCare.model.StressData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
