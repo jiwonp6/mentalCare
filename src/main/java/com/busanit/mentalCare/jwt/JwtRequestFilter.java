@@ -1,5 +1,7 @@
 package com.busanit.mentalCare.jwt;
 
+import com.busanit.mentalCare.dto.McUserDto;
+import com.busanit.mentalCare.service.CustomMcUserDetailsService;
 import com.busanit.mentalCare.service.McUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,6 +23,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired      // DI
     private McUserService mc_userService;
+    @Autowired
+    private CustomMcUserDetailsService customMcUserDetailsService;
 
     @Autowired      // DI
     private JwtUtil jwtUtil;
@@ -40,10 +44,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             userId = jwtUtil.extractUsername(jwt);     // 사용자이름 추출
         }
 
-        // 토큰에 사용자 이름은 존재하는데, SecurityContextHolder 에 인증이 되지 않은 경우
+        // 토큰에 사용자 이름은 존재하는데, SecurityContextHlder 에 인증이 되지 않은 경우
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // 사용자 정보를 불러옴
-            UserDetails userDetails = (UserDetails) this.mc_userService.getByUserId(userId);
+            McUserDto dto = this.mc_userService.getByUserId(userId).toEntity().toDto();
+
+            UserDetails userDetails = customMcUserDetailsService.loadUserByUsername(dto.getUserId());
 
             // 사용자 정보를 불러오니, 토큰이 유효한 경우
             if (jwtUtil.validateToken(jwt, userDetails)) {
