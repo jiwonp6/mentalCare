@@ -16,15 +16,12 @@ import java.util.Map;
 public class HeartController {
 
     private final HeartService heartService;
-    private final McUserService userService;
 
     @PostMapping("/up/{boardId}")
     public ResponseEntity<Map<String, Integer>> addHeart(@PathVariable("boardId") Long boardId, @RequestBody McUser user) {
         Integer count = heartService.addHeart(boardId, user);
         Map<String, Integer> map = new HashMap<>();
         map.put("count", count);
-        System.out.println(count);
-        System.out.println(map);
         return ResponseEntity.ok(map);
     }
 }
