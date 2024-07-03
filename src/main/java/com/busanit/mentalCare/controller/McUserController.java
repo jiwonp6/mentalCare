@@ -35,7 +35,6 @@ public class McUserController {
     @Autowired
     private JwtUtil jwtUtil;
 
-
     /* 메소드 */
     /* 이용자 */
     // 로그인

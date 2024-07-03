@@ -78,8 +78,8 @@ public class EmotionDiaryService {
     }
 
     // 감정일지 수정
-    public EmotionDiaryDto updateEmotionDiary(Long edId, EmotionDiaryDto updateEmotionDiaryDto) {
-        EmotionDiary emotionDiary = emotionDiaryRepository.findById(edId).orElse(null);
+    public EmotionDiaryDto updateEmotionDiary(String userId, String edDate, EmotionDiaryDto updateEmotionDiaryDto) {
+        EmotionDiary emotionDiary = emotionDiaryRepository.selectedDateEmotionDiary(userId, edDate);
 
         if (emotionDiary == null) {
             throw new RuntimeException("감정일지 수정 오류 발생");
@@ -96,7 +96,7 @@ public class EmotionDiaryService {
 
     // 감정일지 삭제
     @Transactional
-    public int deleteEmotionDiary(String userId, Long edId) {
-        return emotionDiaryRepository.deleteEmotionDiary(userId, edId);
+    public int deleteEmotionDiary(String userId, String edDate) {
+        return emotionDiaryRepository.deleteEmotionDiary(userId, edDate);
     }
 }
