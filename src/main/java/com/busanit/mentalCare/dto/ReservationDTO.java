@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.dto;
 
 import com.busanit.mentalCare.model.Hospital;
+import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.model.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,18 +16,21 @@ import java.time.LocalTime;
 public class ReservationDTO {
     private Long reservationId;
     private String userId;
+    private Long consultationId;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate reservationDate;
-    private LocalDate treatmentDate;
-    private LocalTime treatmentTime;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime ReservationTime;
     private String hospitalId;
+    private String hospitalName;
 
-    public Reservation toEntity(Hospital hospital) {
+    public Reservation toEntity(Hospital hospital, McUser user) {
         return Reservation.builder()
                 .reservationId(reservationId)
-                .userId(userId)
+                .user(user)
+                .consultationId(consultationId)
                 .reservationDate(reservationDate)
-                .treatmentDate(treatmentDate)
-                .treatmentTime(treatmentTime)
+                .reservationTime(ReservationTime)
                 .hospital(hospital)
                 .build();
     }

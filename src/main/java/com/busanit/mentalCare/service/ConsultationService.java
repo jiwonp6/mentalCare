@@ -31,6 +31,8 @@ public class ConsultationService {
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         Consultation entity = consultationDto.toEntity(reservation);
         Consultation save = consultationRepository.save(entity);
+
+        reservation.setConsultationId(save.getConsultationId());    // 상담내역 저장시 예약정보의 상담ID 업데이트
         return save.toDTO();
     }
 

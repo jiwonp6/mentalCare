@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.ReservationDTO;
+import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.model.Reservation;
 import com.busanit.mentalCare.repository.ReservationRepository;
 import com.busanit.mentalCare.service.ReservationService;
@@ -20,6 +21,7 @@ public class ReservationController {
 
     @PostMapping
     public ReservationDTO createReservation(@RequestBody ReservationDTO reservationDTO) {
+        System.out.println(reservationDTO);
         return reservationService.createReservation(reservationDTO);
     }
 
@@ -28,9 +30,13 @@ public class ReservationController {
         return reservationRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Reservation getReservationById(@PathVariable Long reservationId) {
-        return reservationRepository.findById(reservationId).orElse(null);
+    @GetMapping("/{reservationId}")
+    public ReservationDTO getReservationById(@PathVariable Long reservationId) {
+        return reservationService.getReservationById(reservationId);
+    }
+    @GetMapping("/user/{userId}")
+    public List<ReservationDTO> getReservationByUserId(@PathVariable String userId) {
+        return reservationService.getReservationByUserId(userId);
     }
 
     // UPDATE
@@ -41,11 +47,8 @@ public class ReservationController {
             if (updateReservation.getReservationDate() == null) {
                 reservation.setReservationDate(updateReservation.getReservationDate());
             }
-            if (updateReservation.getTreatmentDate() == null) {
-                reservation.setTreatmentDate(updateReservation.getTreatmentDate());
-            }
-            if (updateReservation.getTreatmentTime() == null) {
-                reservation.setTreatmentTime(updateReservation.getTreatmentTime());
+            if (updateReservation.getReservationTime() == null) {
+                reservation.setReservationTime(updateReservation.getReservationTime());
             }
             return reservationRepository.save(reservation);
         } else {
@@ -54,7 +57,7 @@ public class ReservationController {
     }
 
     // DELETE
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{reservationId}")
     public String deleteReservation(@PathVariable Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         if (reservation != null) {

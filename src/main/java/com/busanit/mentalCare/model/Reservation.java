@@ -1,6 +1,7 @@
 package com.busanit.mentalCare.model;
 
 import com.busanit.mentalCare.dto.ReservationDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,8 @@ import java.time.LocalTime;
 @Data
 @Builder
 @Entity
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "reservation")
 public class Reservation {
     @Id
@@ -21,24 +23,33 @@ public class Reservation {
     @Column(name = "reservationId")
     private Long reservationId;
 
-    @Column(name = "userId")
-    private String userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    private McUser user;
+
+    @Column(name = "consultationId")
+    private Long consultationId;
+
+    @Temporal(TemporalType.DATE)
     @Column(name = "reservationDate")
     private LocalDate reservationDate;
-    @Column(name = "treatmentDate")
-    private LocalDate treatmentDate;
-    @Column(name = "treatmentTime")
-    private LocalTime treatmentTime;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @Temporal(TemporalType.TIME)
+    @Column(name = "reservationTime")
+    private LocalTime reservationTime;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "hospitalId")
     private Hospital hospital;
 
     public ReservationDTO toDTO() {
         String hospitalId = null;
+        String hospitalName = null;
         if (hospital != null) {
             hospitalId = hospital.getHospitalId();
-            return new ReservationDTO(reservationId, userId, reservationDate, treatmentDate, treatmentTime, hospitalId);
+            hospitalName = hospital.getHospitalName();
+            return new ReservationDTO(reservationId, user.getUserId(), consultationId, reservationDate, reservationTime, hospitalId, hospitalName);
         }
         return null;
     }

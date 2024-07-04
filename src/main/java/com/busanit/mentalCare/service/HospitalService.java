@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class HospitalService {
 
-
     @Autowired
     private HospitalRepository hospitalRepository;
 

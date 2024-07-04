@@ -26,12 +26,12 @@ public class ConsultationController {
     @GetMapping
     public List<Consultation> getAllConsultation() { return consultationRepository.findAll(); }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{consultationId}")
     public Consultation getConsultationById(@PathVariable Long consultationId) {
         return consultationRepository.findById(consultationId).orElse(null);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{consultationId}")
     public Consultation updateConsultation(@PathVariable Long consultationId, @RequestBody Consultation updateConsultation) {
         Consultation consultation = consultationRepository.findById(consultationId).orElse(null);
         if (consultation != null ) {
@@ -47,7 +47,7 @@ public class ConsultationController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{consultationId}")
     public String deleteConsultataion(@PathVariable Long consultationId) {
         Consultation consultation = consultationRepository.findById(consultationId).orElse(null);
         if (consultation != null) {
