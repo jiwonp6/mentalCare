@@ -2,13 +2,16 @@ package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.ReservationDTO;
 import com.busanit.mentalCare.model.Hospital;
+import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.model.Reservation;
 import com.busanit.mentalCare.repository.HospitalRepository;
+import com.busanit.mentalCare.repository.McUserRepository;
 import com.busanit.mentalCare.repository.ReservationRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,12 +21,17 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
     @Autowired
     private HospitalRepository hospitalRepository;
+    @Autowired
+    private McUserRepository mcUserRepository;
 
     public List<Reservation> getAllReservation() {
         return reservationRepository.findAll();
     }
-    public Reservation getReservationById(Long reservationId) {
-        return reservationRepository.findById(reservationId).orElse(null);
+    public ReservationDTO getReservationById(Long reservationId) {
+        System.out.println("reservationId : " + reservationId);
+        Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
+        return reservation.toDTO();
+
     }
 
     // 병원 ID를 받아서 예약 정보 들고오기
@@ -31,8 +39,10 @@ public class ReservationService {
     public ReservationDTO createReservation(ReservationDTO dto) {
         String hospitalId = dto.getHospitalId();
         Hospital hospital = hospitalRepository.findById(hospitalId).orElse(null);
-        Reservation entity = dto.toEntity(hospital);
+        McUser user = mcUserRepository.findByUserId(dto.getUserId());
+        Reservation entity = dto.toEntity(hospital, user);
         Reservation save = reservationRepository.save(entity);
+
         return save.toDTO();
 
 
@@ -45,11 +55,8 @@ public class ReservationService {
             if (updateReservation.getReservationDate() == null) {
                 reservation.setReservationDate(updateReservation.getReservationDate());
             }
-            if (updateReservation.getTreatmentDate() == null) {
-                reservation.setTreatmentDate(updateReservation.getTreatmentDate());
-            }
-            if (updateReservation.getTreatmentTime() == null) {
-                reservation.setTreatmentTime(updateReservation.getTreatmentTime());
+            if (updateReservation.getReservationTime() == null) {
+                reservation.setReservationTime(updateReservation.getReservationTime());
             }
             return reservationRepository.save(reservation);
         } else {
@@ -66,5 +73,14 @@ public class ReservationService {
         } else {
             return false;
         }
+    }
+
+    public List<ReservationDTO> getReservationByUserId(String userId) {
+        List<Reservation> list = reservationRepository.findByUserUserId(userId);
+        List<ReservationDTO> dtoList = new ArrayList<>();
+        for (Reservation reservation : list) {
+            dtoList.add(reservation.toDTO());
+        }
+        return dtoList;
     }
 }

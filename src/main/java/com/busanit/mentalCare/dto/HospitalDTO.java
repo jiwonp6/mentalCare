@@ -13,6 +13,7 @@ import java.sql.Time;
 public class HospitalDTO {
     private String hospitalId;
     private String hospitalName;
+    private String hospitalLocCode;
     private String hospitalLocation;
     private String hospitalWebsite;
     private String hospitalCall;
@@ -38,6 +39,7 @@ public class HospitalDTO {
         return Hospital.builder()
                 .hospitalId(hospitalId)
                 .hospitalName(hospitalName)
+                .hospitalLocCode(hospitalLocCode)
                 .hospitalLocation(hospitalLocation)
                 .hospitalWebsite(hospitalWebsite)
                 .hospitalCall(hospitalCall)

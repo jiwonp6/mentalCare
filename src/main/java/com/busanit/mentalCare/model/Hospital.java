@@ -2,6 +2,7 @@ package com.busanit.mentalCare.model;
 
 import com.busanit.mentalCare.dto.HospitalDTO;
 import com.busanit.mentalCare.dto.ReservationDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,8 +38,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "hospital")
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class Hospital {
 
     @Id
@@ -46,6 +46,8 @@ public class Hospital {
     private String hospitalId;
     @Column(name = "hospital_name")
     private String hospitalName;
+    @Column(name = "hospital_loc_code")
+    private String hospitalLocCode;
     @Column(name = "hospital_location")
     private String hospitalLocation;
     @Column(name = "hospitalWebsite")
@@ -88,6 +90,7 @@ public class Hospital {
     private String holiday;
 
     //  양방향일때
+    @JsonIgnore
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
@@ -98,7 +101,7 @@ public class Hospital {
                     .map(Reservation::toDTO)
                     .toList();
         }
-        return new HospitalDTO(hospitalId, hospitalName, hospitalLocation, hospitalWebsite, hospitalCall, monStartTime,
+        return new HospitalDTO(hospitalId, hospitalName, hospitalLocCode, hospitalLocation, hospitalWebsite, hospitalCall, monStartTime,
                 monEndTime, tueStartTime, tueEndTime, wedStartTime, wedEndTime, thuStartTime, thuEndTime, friStartTime,
                 friEndTime, satStartTime, satEndTime, sunStartTime, sunEndTime, sunHoliday, lunchtime, holiday);
     }
