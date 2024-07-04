@@ -45,14 +45,13 @@ public class EmotionDiaryService {
     // 해당 날짜 감정일지
     public EmotionDiaryViewDto getSelectedDateEmotionDiary(String userId, String edDate) {
         EmotionDiary emotionDiary = emotionDiaryRepository.selectedDateEmotionDiary(userId, edDate);
-
         String emotionType = emotionDiary.getEmotion().getEmotionType();
         String emotionWord = emotionDiary.getEmotion().getEmotionWord();
 
         EmotionDiaryViewDto edViewDto = EmotionDiaryViewDto.builder()
                 .edId(emotionDiary.getEdId())
                 .userId(userId)
-                .emotionId(emotionDiary.getEdId())
+                .emotionId(emotionDiary.getEmotion().getEmotionId())
                 .emotionWord(emotionWord)
                 .emotionType(emotionType)
                 .edReason(emotionDiary.getEdReason())
@@ -80,7 +79,6 @@ public class EmotionDiaryService {
     // 감정일지 수정
     public EmotionDiaryDto updateEmotionDiary(String userId, String edDate, EmotionDiaryDto updateEmotionDiaryDto) {
         EmotionDiary emotionDiary = emotionDiaryRepository.selectedDateEmotionDiary(userId, edDate);
-
         if (emotionDiary == null) {
             throw new RuntimeException("감정일지 수정 오류 발생");
         }
