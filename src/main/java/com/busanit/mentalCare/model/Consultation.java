@@ -28,7 +28,7 @@ public class Consultation {
     private Blob picture;
 
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reservationId")
     private Reservation reservation;
 

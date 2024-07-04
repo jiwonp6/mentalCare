@@ -23,6 +23,7 @@ public class Reservation {
     @Column(name = "reservationId")
     private Long reservationId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private McUser user;
