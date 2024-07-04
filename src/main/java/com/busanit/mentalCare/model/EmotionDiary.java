@@ -18,7 +18,6 @@ public class EmotionDiary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long edId;
 
-
     @ManyToOne(targetEntity = com.busanit.mentalCare.model.McUser.class)
     @JoinColumn(name = "userId")
     private McUser mcUser;

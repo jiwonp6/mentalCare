@@ -37,15 +37,15 @@ public class EmotionDiaryController {
 
     // 감정일지 수정
     @PutMapping("/updateEmotionDiary")
-    public ResponseEntity<EmotionDiaryDto> updateEmotionDiary(@RequestParam Long edId, @RequestBody EmotionDiaryDto updateEdDto) {
-        EmotionDiaryDto emotionDiaryDto = emotionDiaryService.updateEmotionDiary(edId, updateEdDto);
+    public ResponseEntity<EmotionDiaryDto> updateEmotionDiary(@RequestParam String userId, @RequestParam String edDate, @RequestBody EmotionDiaryDto updateEdDto) {
+        EmotionDiaryDto emotionDiaryDto = emotionDiaryService.updateEmotionDiary(userId, edDate, updateEdDto);
         return ResponseEntity.ok(emotionDiaryDto);
     }
 
     // 감정일지 삭제
     @PutMapping("/deleteEmotionDiary")
-    public ResponseEntity<Integer> deleteEmotionDiary(@RequestParam String userId, @RequestParam Long edId) {
-        int result = emotionDiaryService.deleteEmotionDiary(userId, edId);
+    public ResponseEntity<Integer> deleteEmotionDiary(@RequestParam String userId, @RequestParam String edDate) {
+        int result = emotionDiaryService.deleteEmotionDiary(userId, edDate);
         try {
             if (result > 0) {
                 return ResponseEntity.ok(result);

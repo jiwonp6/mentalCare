@@ -48,7 +48,10 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> auth
                         // 해당 패턴에 대해서는 권한 허용
                         .requestMatchers(
-                                "/auth", "/jwt/**",
+                                // "/mcUser/**", "/mcUserData/**", "/emotion/**", "/myEmotion/**", "/emotionDiary/**", "/emotion/**",
+
+                                "/auth", "/jwt/**", "/mcUser/authLogin", "/mcUser/createUser", "/mcUser/createUser",
+
                                 // SpringDoc Open API 주소 허용
                                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/hospitals/**", "/reservation/**", "/consultation/**").permitAll() // 개발용

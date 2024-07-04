@@ -19,7 +19,7 @@ public interface EmotionDiaryRepository extends JpaRepository<EmotionDiary, Long
 
     // 감정일지 삭제
     @Modifying
-    @Query(value = "DELETE FROM EmotionDiary ed WHERE ed.edId = :edId AND ed.mcUser.userId = :userId")
-    int deleteEmotionDiary(@Param("userId") String userId, @Param("edId") Long edId);
+    @Query(value = "DELETE FROM EmotionDiary ed WHERE ed.edDate = :edDate AND ed.mcUser.userId = :userId")
+    int deleteEmotionDiary(@Param("userId") String userId, @Param("edDate") String edDate);
 
 }
