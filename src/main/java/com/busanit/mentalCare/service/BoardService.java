@@ -27,9 +27,9 @@ public class BoardService {
 
 
     // 모든 게시글 조회
+    @Transactional
     public List<BoardDTO> getAllBoards() {
         List<Board> boards = boardRepository.findAll();
-
         return boards.stream().map(Board::toDTO).toList();
     }
 
