@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-// 스프링 시큐리티의 클래스를 상속받지 않는 UserService
 @Service
 @RequiredArgsConstructor
 public class EmotionDiaryService {

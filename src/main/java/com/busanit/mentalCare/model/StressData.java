@@ -27,7 +27,6 @@ public class StressData {
     @Column(nullable = false)
     private int stdAvg;
 
-    // 엔티티 -> DTO 변환 메서드
     public StressDataDto toDto() {
         return new StressDataDto(stdId, mcUser.getUserId(), stdDate, stdAvg);
     }

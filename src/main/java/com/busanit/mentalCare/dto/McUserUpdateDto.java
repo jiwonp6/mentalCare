@@ -22,9 +22,7 @@ public class McUserUpdateDto {
     private LocalDate userJoindate;
     private boolean userSecession;
 
-    // DTO -> 엔티티 (엔티티에 @Builder 적용, 빌더 패턴 사용)
     public McUser toEntity() {
-        // DTO -> 엔티티 필드 매핑
         McUser user = McUser.builder()
                 .userId(userId)
                 .userPw(userPwNew)

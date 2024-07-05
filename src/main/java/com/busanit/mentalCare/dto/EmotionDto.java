@@ -13,9 +13,7 @@ public class EmotionDto {
     private String emotionWord;
     private String emotionType;
 
-    // DTO -> 엔티티 (엔티티에 @Builder 적용, 빌더 패턴 사용)
     public Emotion toEntity() {
-        // DTO -> 엔티티 필드 매핑
         Emotion emotion = Emotion.builder()
                 .emotionId(emotionId)
                 .emotionWord(emotionWord)

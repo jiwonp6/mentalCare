@@ -8,14 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// 스프링 시큐리티의 클래스를 상속받지 않는 UserService
 @Service
 @RequiredArgsConstructor
 public class EmotionService {
 
     private final EmotionRepository emotionRepository;
 
-    //
     public EmotionDto getEmotionById(Long emotionId) {
         return emotionRepository.findById(emotionId).orElse(null).toDto();
     }

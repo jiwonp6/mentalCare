@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
-// 스프링 시큐리티의 클래스를 상속받지 않는 UserService
 @Service
 @RequiredArgsConstructor
 public class McUserService {

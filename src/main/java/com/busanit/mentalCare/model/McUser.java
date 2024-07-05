@@ -43,7 +43,6 @@ public class McUser {
     @Column(nullable = false)
     private boolean userSecession;
 
-    // 엔티티 -> DTO 변환 메서드
     public McUserDto toDto() {
         return new McUserDto(userId, userPw, userNickname, userGender, userBirth, userEmail, userPhonenumber, userJoindate, userSecession);
     }

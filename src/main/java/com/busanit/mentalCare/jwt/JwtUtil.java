@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Component  // 스프링 컴포넌트로 등록
+@Component
 public class JwtUtil {
 
     // SHA 256 암호화 알고리즘으로 생성한 키 (너무 약한 비밀번호는 불가)
@@ -32,8 +32,6 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        // JWT 토큰을 파싱해서 클레임을 추출
-        //  추출한 클레임을 함수형 인터페이스로 처리
         return claimsResolver.apply(claims);
     }
 
@@ -49,14 +47,12 @@ public class JwtUtil {
 
     // 토큰 만료 여부 확인
     private Boolean isTokenExpired(String token) {
-        // 현재날짜와 비교하여 토큰의 만료날짜가 이전인지에 따라 true/false
         return extractExpiration(token).before(new Date());
     }
 
     // 토큰 생성
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();  // 빈 클레임 맵 컬렉션
-        // 클레임 맵과 스프링 시큐리티에서 가져온 사용자 이름 정보로 토큰 생성
+        Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -72,10 +68,8 @@ public class JwtUtil {
 
     // 토큰 유효성 검증
     public Boolean validateToken(String token, UserDetails userDetails) {
-        String username = extractUsername(token);   // 토큰에서 사용자 이름 추출
-        // 토큰 사용자 이름 = 스프링 유저 사용자 이름
+        String username = extractUsername(token);
         Boolean isEqualUsername = username.equals(userDetails.getUsername());
-        // 토큰 만료기간 안 지났는지
         Boolean isNotExpired = !isTokenExpired(token);
         return isEqualUsername && isNotExpired;
     }

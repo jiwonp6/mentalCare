@@ -33,7 +33,6 @@ public class EmotionDiary {
     @Column(nullable = false)
     private String edDate;
 
-    // 엔티티 -> DTO 변환 메서드
     public EmotionDiaryDto toDto() {
         return new EmotionDiaryDto(edId, mcUser.getUserId(), emotion.getEmotionId(), edReason, edDate);
     }

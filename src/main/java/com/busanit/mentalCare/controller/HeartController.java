@@ -2,7 +2,6 @@ package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.model.McUser;
 import com.busanit.mentalCare.service.HeartService;
-import com.busanit.mentalCare.service.McUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

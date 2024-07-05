@@ -1,14 +1,12 @@
 package com.busanit.mentalCare.service;
 
 import com.busanit.mentalCare.dto.SleepDataDto;
-import com.busanit.mentalCare.dto.StressDataDto;
 import com.busanit.mentalCare.model.SleepData;
-import com.busanit.mentalCare.model.StressData;
 import com.busanit.mentalCare.repository.SleepDataRepository;
+import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-// 스프링 시큐리티의 클래스를 상속받지 않는 UserService
 @Service
 @RequiredArgsConstructor
 public class SleepDataService {
@@ -20,7 +18,7 @@ public class SleepDataService {
 
         // 데이터가 없는 경우
         if (sld == null) {
-
+            throw new IOException("수면 데이터가 없습니다.");
         }
 
         return sld.toDto();
@@ -32,7 +30,7 @@ public class SleepDataService {
 
         // 데이터가 없는 경우
         if (sld == null) {
-
+            throw new IOException("수면 데이터가 없습니다.");
         }
 
         return sld.toDto();

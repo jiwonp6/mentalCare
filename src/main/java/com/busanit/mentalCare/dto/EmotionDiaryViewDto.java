@@ -1,8 +1,5 @@
 package com.busanit.mentalCare.dto;
 
-import com.busanit.mentalCare.model.Emotion;
-import com.busanit.mentalCare.model.EmotionDiary;
-import com.busanit.mentalCare.model.McUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

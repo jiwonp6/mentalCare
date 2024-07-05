@@ -1,7 +1,6 @@
 package com.busanit.mentalCare.model;
 
 import com.busanit.mentalCare.dto.SleepDataDto;
-import com.busanit.mentalCare.dto.StressDataDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +27,6 @@ public class SleepData {
     @Column(nullable = false)
     private int sldAvg;
 
-    // 엔티티 -> DTO 변환 메서드
     public SleepDataDto toDto() {
         return new SleepDataDto(sldId, mcUser.getUserId(), sldDate, sldAvg);
     }

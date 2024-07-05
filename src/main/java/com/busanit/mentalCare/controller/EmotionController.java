@@ -1,7 +1,6 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.EmotionDto;
-import com.busanit.mentalCare.model.Emotion;
 import com.busanit.mentalCare.service.EmotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

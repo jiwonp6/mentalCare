@@ -24,7 +24,6 @@ public class Emotion {
     @Column(nullable = false)
     private String emotionType;
 
-    // 엔티티 -> DTO 변환 메서드
     public EmotionDto toDto() {
         return new EmotionDto(emotionId, emotionWord, emotionType);
     }

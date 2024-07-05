@@ -1,7 +1,6 @@
 package com.busanit.mentalCare.controller;
 
 import com.busanit.mentalCare.dto.SleepDataDto;
-import com.busanit.mentalCare.dto.StressDataDto;
 import com.busanit.mentalCare.service.SleepDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

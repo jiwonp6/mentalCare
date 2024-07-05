@@ -18,9 +18,7 @@ public class StressDataDto {
 
     private int stdAvg;
 
-    // DTO -> 엔티티 (엔티티에 @Builder 적용, 빌더 패턴 사용)
     public StressData toEntity(McUser mcUser) {
-        // DTO -> 엔티티 필드 매핑
         StressData std = StressData.builder()
                 .stdId(stdId)
                 .mcUser(mcUser)

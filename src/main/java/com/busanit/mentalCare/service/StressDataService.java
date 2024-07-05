@@ -3,6 +3,7 @@ package com.busanit.mentalCare.service;
 import com.busanit.mentalCare.dto.StressDataDto;
 import com.busanit.mentalCare.model.StressData;
 import com.busanit.mentalCare.repository.StressDataRepository;
+import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class StressDataService {
 
         // 데이터가 없는 경우
         if (std == null) {
-
+            throw new IOException("스트레스 데이터가 없습니다.");
         }
 
         return std.toDto();
@@ -30,7 +31,7 @@ public class StressDataService {
 
         // 데이터가 없는 경우
         if (std == null) {
-
+            throw new IOException("스트레스 데이터가 없습니다.");
         }
 
         return std.toDto();

@@ -21,13 +21,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/jwt")
-@RequiredArgsConstructor    // 필수 생성자 => 의존성 주입
+@RequiredArgsConstructor
 public class AuthController {
 
     // 스프링 컴포넌트 의존성 주입
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final McUserRepository userRepository;
     private final McUserService userService;
     private final CustomMcUserDetailsService customUserService;
 
@@ -45,13 +44,10 @@ public class AuthController {
             throw new Exception("wrong UserId or Password", e);
         }
 
-        // UserDetails 가져오기
         UserDetails userDetails = customUserService.loadUserByUsername(userDto.getUserId());
 
-        // 토큰 생성하기 (UserDetails 정보 기반)
         String jwt = jwtUtil.generateToken(userDetails);
 
-        // 토큰 정보를 담은 Map 을 응답으로 반환
         Map<String, String> response = new HashMap<>();
         response.put("jwt", jwt);
 
